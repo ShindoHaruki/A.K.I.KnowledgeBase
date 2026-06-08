@@ -1,0 +1,42 @@
+@startuml
+title Street Fighter 6 - A.K.I. 通常技後のケース整理
+
+start
+
+:通常技を振る;
+
+if (ヒットした?) then (yes)
+  if (コンボ始動できる?) then (yes)
+    :コンボへ;
+    :毒状態 / 画面位置 / ゲージ状況を確認;
+  else (no)
+    :状況有利を取る;
+    :前歩き / 距離調整 / 起き攻め準備;
+  endif
+
+elseif (ガードされた?) then (yes)
+  if (自分が有利?) then (yes)
+    :投げ;
+    :打撃択;
+    :様子見;
+  elseif (確反あり?) then (yes)
+    :基本は振る距離を限定;
+    :先端管理 or 封印候補;
+  else (五分〜微不利)
+    :暴れ潰し;
+    :後ろ下がり;
+    :パリィ / OD無敵警戒;
+  endif
+
+else (空振り)
+  if (相手の差し返し間合い?) then (yes)
+    :次回の頻度を下げる;
+    :置きタイミングをずらす;
+  else (no)
+    :再度牽制;
+    :前歩きでライン上げ;
+  endif
+endif
+
+stop
+@enduml

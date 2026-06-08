@@ -1,0 +1,30 @@
+@startuml
+title A.K.I. 通常技別 - 技後ケーステンプレート
+
+partition "5MP / 2MP / 2MK など" {
+  start
+  :技を振る;
+
+  if (ヒット?) then (yes)
+    :ヒット確認;
+    if (キャンセル可能?) then (yes)
+      :必殺技 / DR / SAへ;
+    else (no)
+      :距離と有利状況を確認;
+    endif
+
+  elseif (ガード?) then (yes)
+    if (先端?) then (yes)
+      :比較的安全に距離維持;
+    else (no)
+      :確反 / 暴れ / パリィを警戒;
+    endif
+
+  else (空振り)
+    :差し返し警戒;
+    :次の置き技・歩き・ガードへ;
+  endif
+
+  stop
+}
+@enduml

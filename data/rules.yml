@@ -1,0 +1,27 @@
+judgement_rules:
+  on_hit:
+    combo_available:
+      action: "コンボへ"
+    no_combo:
+      action: "有利状況を取る / 距離を調整する"
+
+  on_block:
+    plus:
+      action: "投げ / 打撃 / 様子見"
+    even_or_slight_minus:
+      action: "暴れ潰し / 後ろ下がり / パリィ警戒"
+    punishable:
+      action: "振る距離を限定 / 先端管理 / 封印候補"
+
+  on_whiff:
+    close_range:
+      action: "差し返し警戒 / 次回頻度を下げる"
+    far_range:
+      action: "置き直し / 前歩き / 様子見"
+
+labels:
+  hit: "ヒット"
+  block: "ガード"
+  whiff: "空振り"
+  plus: "有利"
+  punishable: "確反あり"

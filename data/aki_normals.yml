@@ -1,0 +1,325 @@
+version: "TODO: patch version / date"
+game: "Street Fighter 6"
+character: "A.K.I."
+source_notes:
+  - "TODO: official patch notes URL"
+  - "TODO: frame data source URL"
+
+normals:
+  - id: "5LP"
+    name: "立ち弱P"
+    category: "normal"
+    range: "近距離"
+    main_use:
+      - "暴れ"
+      - "固め"
+      - "確認"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "小技連係"
+        - "キャンセル確認"
+      block:
+        - "刻み継続"
+        - "投げ択"
+        - "様子見"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "2LP"
+    name: "しゃがみ弱P"
+    category: "normal"
+    range: "近距離"
+    main_use:
+      - "暴れ"
+      - "下段以外の小技連係"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "小技連係"
+      block:
+        - "刻み"
+        - "投げ"
+      whiff:
+        - "距離を離す"
+    notes: ""
+
+  - id: "5LK"
+    name: "立ち弱K"
+    category: "normal"
+    range: "近〜中距離"
+    main_use:
+      - "牽制"
+      - "置き"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "状況確認"
+      block:
+        - "距離確認"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "2LK"
+    name: "しゃがみ弱K"
+    category: "normal"
+    range: "近距離"
+    main_use:
+      - "下段始動"
+      - "崩し"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "小技連係"
+      block:
+        - "下段刻み"
+        - "暴れ潰し検討"
+      whiff:
+        - "密着空振りに注意"
+    notes: ""
+
+  - id: "5MP"
+    name: "立ち中P"
+    category: "normal"
+    range: "近〜中距離"
+    main_use:
+      - "固め"
+      - "差し込み"
+      - "コンボ始動"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "コンボ確認"
+        - "キャンセル必殺技"
+      block:
+        - "有利不利確認"
+        - "暴れ潰し"
+        - "投げ間合い確認"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "2MP"
+    name: "しゃがみ中P"
+    category: "normal"
+    range: "近〜中距離"
+    main_use:
+      - "置き"
+      - "固め"
+      - "確認"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "キャンセル確認"
+      block:
+        - "距離次第で継続"
+        - "パリィ警戒"
+      whiff:
+        - "前歩き差し返しに注意"
+    notes: ""
+
+  - id: "5MK"
+    name: "立ち中K"
+    category: "normal"
+    range: "中距離"
+    main_use:
+      - "牽制"
+      - "置き"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "状況有利確認"
+      block:
+        - "先端維持"
+        - "無理に継続しない"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "2MK"
+    name: "しゃがみ中K"
+    category: "normal"
+    range: "中距離"
+    main_use:
+      - "下段牽制"
+      - "差し込み"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "キャンセル確認"
+        - "ドライブラッシュ確認"
+      block:
+        - "先端なら比較的安全"
+        - "密着なら反撃警戒"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "5HP"
+    name: "立ち強P"
+    category: "normal"
+    range: "中距離"
+    main_use:
+      - "差し返し"
+      - "大きめの確定"
+      - "置き"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "高火力コンボ"
+      block:
+        - "確反有無確認"
+        - "先端管理"
+      whiff:
+        - "大きな差し返し警戒"
+    notes: ""
+
+  - id: "2HP"
+    name: "しゃがみ強P"
+    category: "normal"
+    range: "近〜中距離"
+    main_use:
+      - "対空候補"
+      - "コンボ"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "コンボ"
+      block:
+        - "反撃警戒"
+      whiff:
+        - "大きな隙に注意"
+    notes: ""
+
+  - id: "5HK"
+    name: "立ち強K"
+    category: "normal"
+    range: "中〜遠距離"
+    main_use:
+      - "牽制"
+      - "置き"
+      - "クラッシュ/カウンター狙い"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "状況確認"
+      block:
+        - "距離を離す"
+      whiff:
+        - "差し返し警戒"
+    notes: ""
+
+  - id: "2HK"
+    name: "しゃがみ強K"
+    category: "normal"
+    range: "中距離"
+    main_use:
+      - "下段差し返し"
+      - "ダウン奪取"
+    startup: "TODO"
+    active: "TODO"
+    recovery: "TODO"
+    on_hit: "TODO"
+    on_block: "TODO"
+    cancel:
+      special: "TODO"
+      super: "TODO"
+      drive_rush: "TODO"
+    cases:
+      hit:
+        - "ダウン後の起き攻め確認"
+      block:
+        - "基本的に確反警戒"
+      whiff:
+        - "大きな隙に注意"
+    notes: ""
