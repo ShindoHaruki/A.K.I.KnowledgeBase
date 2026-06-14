@@ -243,6 +243,18 @@ def main():
       font-size: 13px;
     }}
 
+    .site-notice {{
+      margin: 0 0 12px;
+      padding: 9px 11px;
+      border: 1px solid rgba(220, 91, 91, 0.45);
+      border-radius: 8px;
+      background: rgba(220, 91, 91, 0.12);
+      color: #ff9b9b;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.55;
+    }}
+
     .page-tabs {{
       display: flex;
       gap: 8px;
@@ -547,6 +559,7 @@ def main():
     <div class="header-inner">
       <h1>A.K.I. Knowledge Base</h1>
       <p class="meta">お知らせ / 通常技組み合わせ / キャラ対</p>
+      <p class="site-notice">時間を見つけて開発しながら随時更新しています。AIと共同開発しているため、表記ゆれや整理途中の内容が含まれる可能性があります。</p>
       <nav class="page-tabs" aria-label="ページ切替">
         <button class="active" type="button" data-view-button="news">お知らせ</button>
         <button type="button" data-view-button="routes">通常技組み合わせ</button>

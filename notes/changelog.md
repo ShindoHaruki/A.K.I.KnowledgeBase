@@ -18,6 +18,7 @@
 - お知らせページを基準に、3ページの文字サイズ・余白・カード見出し・スマートフォン表示を調整
 - 旧来の分割HTMLである `news_viewer.html`, `situation_viewer.html`, `matchup_viewer.html` を削除
 - Cloudflare Pages向けに `dist/index.html` だけを公開するビルド手順を追加
+- ヘッダーに開発中・随時更新・AI共同開発による表記ゆれの可能性を示す注意書きを追加
 
 ### Notes
 - 通常技カードと投稿フォームは復活可能なように生成スクリプトを残す
