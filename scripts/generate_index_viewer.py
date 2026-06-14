@@ -306,10 +306,6 @@ def main():
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
     }}
 
-    .tool-box.news-tools {{
-      grid-template-columns: 1fr auto;
-    }}
-
     label {{
       display: block;
       margin-bottom: 6px;
@@ -518,7 +514,6 @@ def main():
 
     @media (max-width: 720px) {{
       .tool-box,
-      .tool-box.news-tools,
       .two-grid,
       .premise-grid {{
         grid-template-columns: 1fr;
@@ -570,13 +565,6 @@ def main():
 
   <main>
     <section class="view" data-view="news">
-      <div class="tool-box news-tools">
-        <div>
-          <label for="newsSearch">検索</label>
-          <input id="newsSearch" type="search" placeholder="例: リリー 風 スパイア">
-        </div>
-        <button class="clear-button" id="clearNews" type="button">クリア</button>
-      </div>
       <div class="summary">
         <span id="newsCount"></span>
         <span>10件ごとに表示</span>
@@ -654,18 +642,13 @@ def main():
       button.addEventListener("click", () => setView(button.dataset.viewButton));
     }}
 
-    const newsInput = document.getElementById("newsSearch");
     const newsItems = Array.from(document.querySelectorAll(".news-item"));
     const newsPager = document.getElementById("newsPager");
     const newsCount = document.getElementById("newsCount");
     let newsPage = 1;
 
     function filteredNews() {{
-      const terms = termsFrom(newsInput);
-      return newsItems.filter((item) => {{
-        const haystack = normalize(item.dataset.search || item.textContent);
-        return terms.every((term) => haystack.includes(term));
-      }});
+      return newsItems;
     }}
 
     function renderNewsPager(pageCount) {{
@@ -694,17 +677,6 @@ def main():
       newsCount.textContent = `${{visible.length}} / ${{newsItems.length}}件`;
       renderNewsPager(pageCount);
     }}
-
-    newsInput.addEventListener("input", () => {{
-      newsPage = 1;
-      applyNews();
-    }});
-    document.getElementById("clearNews").addEventListener("click", () => {{
-      newsInput.value = "";
-      newsPage = 1;
-      newsInput.focus();
-      applyNews();
-    }});
 
     const routeInput = document.getElementById("routeSearch");
     const routeCharacter = document.getElementById("routeCharacter");

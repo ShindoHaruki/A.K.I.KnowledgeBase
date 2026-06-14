@@ -19,6 +19,7 @@
 - 旧来の分割HTMLである `news_viewer.html`, `situation_viewer.html`, `matchup_viewer.html` を削除
 - Cloudflare Pages向けに `dist/index.html` だけを公開するビルド手順を追加
 - ヘッダーに開発中・随時更新・AI共同開発による表記ゆれの可能性を示す注意書きを追加
+- お知らせタブから検索欄を削除
 
 ### Notes
 - 通常技カードと投稿フォームは復活可能なように生成スクリプトを残す
