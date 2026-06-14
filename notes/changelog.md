@@ -4,18 +4,22 @@
 
 ### Added
 - `data/news.yml` を追加
+- `scripts/generate_index_viewer.py` を追加
+- `index.html` を追加
 - `scripts/generate_news_viewer.py` を追加
 - `news_viewer.html` を追加
 
 ### Updated
 - ナビゲーションから `通常技カード` と `投稿` を一旦削除
-- `お知らせ`, `通常技組み合わせ`, `キャラ対` の3ページ構成に整理
+- `お知らせ`, `通常技組み合わせ`, `キャラ対` を1つのHTML内で切り替える構成に整理
 - 閲覧者向けの自然文を `data/news.yml` で管理し、10件ごとにページネーションできるようにした
 - お知らせページを基準に、3ページの文字サイズ・余白・カード見出し・スマートフォン表示を調整
+- 旧来の分割HTMLである `news_viewer.html`, `situation_viewer.html`, `matchup_viewer.html` を削除
 
 ### Notes
 - 通常技カードと投稿フォームは復活可能なように生成スクリプトを残す
 - `notes/changelog.md` は開発履歴として残し、閲覧者向けのお知らせ本文とは分けて管理する
+- 現在の閲覧入口は `index.html`
 
 ## 2026-06-14 / A.K.I. matchup notes
 
