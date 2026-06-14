@@ -26,6 +26,7 @@
 - `notes/changelog.md` は開発履歴として残し、閲覧者向けのお知らせ本文とは分けて管理する
 - 現在の閲覧入口は `index.html`
 - Cloudflare PagesのBuild output directoryは `dist`
+- リュウ戦は中距離方針、波掌撃対策、足刀対応、SA発生フレームをユーザーメモとして整理
 
 ## 2026-06-14 / A.K.I. matchup notes
 
