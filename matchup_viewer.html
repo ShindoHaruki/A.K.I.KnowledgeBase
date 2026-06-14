@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A.K.I. Knowledge Base - キャラ対</title>
+  <style>
+    :root {
+      --bg: #111820;
+      --panel: #18222d;
+      --soft: #202c38;
+      --ink: #eef4f8;
+      --muted: #9aa8b5;
+      --line: #31404f;
+      --accent: #59b7c8;
+      --danger: #dc5b5b;
+      --good: #4ec28b;
+      --warn: #e0a35b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px 20px;
+      background: rgba(17, 24, 32, 0.94);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner, main, .search-panel {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 21px;
+    }
+
+    .meta {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .page-tabs a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .page-tabs a.active {
+      border-color: var(--accent);
+      background: #173845;
+      color: #d7f7ff;
+    }
+
+    .search-panel {
+      padding: 14px 20px 0;
+    }
+
+    .search-box {
+      display: grid;
+      grid-template-columns: 1fr minmax(180px, 240px) auto;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input, select, button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #111820;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0 12px;
+    }
+
+    button {
+      padding: 0 12px;
+      background: var(--soft);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 22px 20px 42px;
+    }
+
+    .matchup-card {
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26);
+      overflow: hidden;
+    }
+
+    .matchup-card[hidden] {
+      display: none;
+    }
+
+    .card-head {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #202c38 0%, #18222d 100%);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+
+    .tags span {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #173845;
+      color: #d7f7ff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .block {
+      margin: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #141e28;
+      overflow: hidden;
+    }
+
+    .block h3 {
+      margin: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #202c38;
+      font-size: 14px;
+    }
+
+    .overview h3 { color: var(--accent); }
+    .danger h3 { color: var(--danger); }
+    .punish h3 { color: var(--warn); }
+    .options h3 { color: var(--good); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 16px;
+    }
+
+    .grid .block {
+      margin: 0 0 14px;
+    }
+
+    p {
+      margin: 0;
+      padding: 12px 14px 14px;
+      color: #d0dae3;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      margin: 0;
+      padding: 11px 14px 12px 30px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      color: #d0dae3;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .todo {
+      color: var(--muted);
+    }
+
+    .search-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      gap: 6px;
+      min-width: 118px;
+    }
+
+    #matchupCount {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .search-box,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      #matchupCount {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 14px 14px;
+      }
+
+      .search-panel {
+        padding: 12px 14px 0;
+      }
+
+      main {
+        padding: 18px 14px 34px;
+      }
+
+      .page-tabs a {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+
+      .block {
+        margin: 12px 12px;
+      }
+
+      .grid {
+        margin: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>A.K.I. Knowledge Base</h1>
+      <p class="meta">キャラ対 / TODO: matchup version / date</p>
+      <nav class="page-tabs" aria-label="ページ切替">
+        <a href="news_viewer.html">お知らせ</a>
+        <a href="situation_viewer.html">通常技組み合わせ</a>
+        <a class="active" href="matchup_viewer.html">キャラ対</a>
+      </nav>
+    </div>
+  </header>
+  <div class="search-panel">
+    <div class="search-box">
+      <div>
+        <label for="matchupSearch">検索</label>
+        <input id="matchupSearch" type="search" placeholder="例: ケン ラッシュ 確反">
+      </div>
+      <div>
+        <label for="characterFilter">キャラ</label>
+        <select id="characterFilter">
+          <option value="">すべて</option>
+          <option value="リュウ">リュウ</option>
+<option value="ルーク">ルーク</option>
+<option value="ジェイミー">ジェイミー</option>
+<option value="春麗">春麗</option>
+<option value="ガイル">ガイル</option>
+<option value="キンバリー">キンバリー</option>
+<option value="ジュリ">ジュリ</option>
+<option value="ケン">ケン</option>
+<option value="ブランカ">ブランカ</option>
+<option value="ダルシム">ダルシム</option>
+<option value="エドモンド本田">エドモンド本田</option>
+<option value="ディージェイ">ディージェイ</option>
+<option value="マノン">マノン</option>
+<option value="マリーザ">マリーザ</option>
+<option value="ＪＰ">ＪＰ</option>
+<option value="ザンギエフ">ザンギエフ</option>
+<option value="リリー">リリー</option>
+<option value="キャミィ">キャミィ</option>
+<option value="ラシード">ラシード</option>
+<option value="A.K.I.">A.K.I.</option>
+<option value="エド">エド</option>
+<option value="豪鬼">豪鬼</option>
+<option value="ベガ">ベガ</option>
+<option value="テリー">テリー</option>
+<option value="舞">舞</option>
+<option value="エレナ">エレナ</option>
+<option value="サガット">サガット</option>
+<option value="C.ヴァイパー">C.ヴァイパー</option>
+<option value="アレックス">アレックス</option>
+<option value="イングリッド">イングリッド</option>
+        </select>
+      </div>
+      <div class="search-side">
+        <span id="matchupCount"></span>
+        <button id="clearSearch" type="button">クリア</button>
+      </div>
+    </div>
+  </div>
+  <main>
+    
+    <article class="matchup-card" data-character="リュウ" data-search="リュウ サンプル 波動対策 TODO: リュウ戦の全体方針を書く。 TODO: 波動拳の撃ち方 TODO: 中足確認 TODO: 確反ポイント TODO: 有効な通常技・組み合わせ サンプル。実戦投入前に検証する。
+">
+      <div class="card-head">
+        <h2>リュウ</h2>
+        <div class="tags"><span>サンプル</span><span>波動対策</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO: リュウ戦の全体方針を書く。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>TODO: 波動拳の撃ち方</li>
+<li>TODO: 中足確認</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>TODO: 確反ポイント</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>TODO: 有効な通常技・組み合わせ</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>サンプル。実戦投入前に検証する。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ルーク" data-search="ルーク 中距離 サンドブラスト ナックル サプレッサー 対空 5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。 サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。 ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。 ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。 垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。 遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。  サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。 強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。 前投げから前ステは0F状況。弱K暴れは有効。 前強Pターゲットコンボは4F技で割り込み可能。 SA1は発生6F、SA2は発生5F、SA3は発生10F。
+お互いの距離がある程度離れている場合は伏せ置き。
+猛毒牙による弾抜けの択を狙う。
+">
+      <div class="card-head">
+        <h2>ルーク</h2>
+        <div class="tags"><span>中距離</span><span>サンドブラスト</span><span>ナックル</span><span>サプレッサー</span><span>対空</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。</li>
+<li>ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。</li>
+<li>ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。</li>
+<li>垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。</li>
+<li>遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。</li>
+<li>強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。</li>
+<li>前投げから前ステは0F状況。弱K暴れは有効。</li>
+<li>前強Pターゲットコンボは4F技で割り込み可能。</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1は発生6F、SA2は発生5F、SA3は発生10F。
+お互いの距離がある程度離れている場合は伏せ置き。
+猛毒牙による弾抜けの択を狙う。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ジェイミー" data-search="ジェイミー 未入力     ">
+      <div class="card-head">
+        <h2>ジェイミー</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="春麗" data-search="春麗 未入力     ">
+      <div class="card-head">
+        <h2>春麗</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ガイル" data-search="ガイル 未入力     ">
+      <div class="card-head">
+        <h2>ガイル</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="キンバリー" data-search="キンバリー 未入力     ">
+      <div class="card-head">
+        <h2>キンバリー</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ジュリ" data-search="ジュリ 未入力     ">
+      <div class="card-head">
+        <h2>ジュリ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ケン" data-search="ケン サンプル ラッシュ対策 TODO: ケン戦の全体方針を書く。 TODO: 龍尾脚 TODO: ラッシュからの投げ/打撃 TODO: 確反ポイント TODO: 有効な通常技・組み合わせ 検索テスト用サンプル。
+">
+      <div class="card-head">
+        <h2>ケン</h2>
+        <div class="tags"><span>サンプル</span><span>ラッシュ対策</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO: ケン戦の全体方針を書く。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>TODO: 龍尾脚</li>
+<li>TODO: ラッシュからの投げ/打撃</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>TODO: 確反ポイント</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>TODO: 有効な通常技・組み合わせ</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>検索テスト用サンプル。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ブランカ" data-search="ブランカ 未入力     ">
+      <div class="card-head">
+        <h2>ブランカ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ダルシム" data-search="ダルシム 未入力     ">
+      <div class="card-head">
+        <h2>ダルシム</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エドモンド本田" data-search="エドモンド本田 未入力     ">
+      <div class="card-head">
+        <h2>エドモンド本田</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ディージェイ" data-search="ディージェイ 未入力     ">
+      <div class="card-head">
+        <h2>ディージェイ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="マノン" data-search="マノン 未入力     ">
+      <div class="card-head">
+        <h2>マノン</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="マリーザ" data-search="マリーザ 未入力     ">
+      <div class="card-head">
+        <h2>マリーザ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ＪＰ" data-search="ＪＰ 未入力     ">
+      <div class="card-head">
+        <h2>ＪＰ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ザンギエフ" data-search="ザンギエフ 未入力     ">
+      <div class="card-head">
+        <h2>ザンギエフ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="リリー" data-search="リリー 風 スパイア 起き攻め Dリバ 差し返し 風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。 風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。 風利用ODスパイアガード時は早めのDリバで拒否推奨。 風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。 風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。 SA3が溜まるまでは9F詐欺の起き攻めが有効。 2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。 弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。 風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。 SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
+風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
+リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
+理想は風を溜められる前に体力リードを作りたい。
+">
+      <div class="card-head">
+        <h2>リリー</h2>
+        <div class="tags"><span>風</span><span>スパイア</span><span>起き攻め</span><span>Dリバ</span><span>差し返し</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。</li>
+<li>風利用ODスパイアガード時は早めのDリバで拒否推奨。</li>
+<li>風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>SA3が溜まるまでは9F詐欺の起き攻めが有効。</li>
+<li>2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。</li>
+<li>弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。</li>
+<li>風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
+風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
+リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
+理想は風を溜められる前に体力リードを作りたい。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="キャミィ" data-search="キャミィ 未入力     ">
+      <div class="card-head">
+        <h2>キャミィ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ラシード" data-search="ラシード 未入力     ">
+      <div class="card-head">
+        <h2>ラシード</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="A.K.I." data-search="A.K.I. 同キャラ 起き攻め ジャストパリィ 毒状態 バーンアウト 起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。 毒状態の時はリターンを考慮し、前ジャンプは控えめにする。 ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。 弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。 5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。 弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。 Dリバ詐欺が機能する組み合わせ 10F詐欺の起き攻め 紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。 弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。 OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。 BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。 SA1、SA3の発生はともに10F。
+紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
+">
+      <div class="card-head">
+        <h2>A.K.I.</h2>
+        <div class="tags"><span>同キャラ</span><span>起き攻め</span><span>ジャストパリィ</span><span>毒状態</span><span>バーンアウト</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>毒状態の時はリターンを考慮し、前ジャンプは控えめにする。</li>
+<li>ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。</li>
+<li>弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。</li>
+<li>弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>Dリバ詐欺が機能する組み合わせ</li>
+<li>10F詐欺の起き攻め</li>
+<li>紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。</li>
+<li>弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。</li>
+<li>OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。</li>
+<li>BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1、SA3の発生はともに10F。
+紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エド" data-search="エド 未入力     ">
+      <div class="card-head">
+        <h2>エド</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="豪鬼" data-search="豪鬼 未入力     ">
+      <div class="card-head">
+        <h2>豪鬼</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ベガ" data-search="ベガ 未入力     ">
+      <div class="card-head">
+        <h2>ベガ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="テリー" data-search="テリー 未入力     ">
+      <div class="card-head">
+        <h2>テリー</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="舞" data-search="舞 未入力     ">
+      <div class="card-head">
+        <h2>舞</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エレナ" data-search="エレナ 未入力     ">
+      <div class="card-head">
+        <h2>エレナ</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="サガット" data-search="サガット 未入力     ">
+      <div class="card-head">
+        <h2>サガット</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="C.ヴァイパー" data-search="C.ヴァイパー 未入力     ">
+      <div class="card-head">
+        <h2>C.ヴァイパー</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="アレックス" data-search="アレックス 未入力     ">
+      <div class="card-head">
+        <h2>アレックス</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="イングリッド" data-search="イングリッド 未入力     ">
+      <div class="card-head">
+        <h2>イングリッド</h2>
+        <div class="tags"><span>未入力</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+  </main>
+  <script>
+    const input = document.getElementById("matchupSearch");
+    const characterFilter = document.getElementById("characterFilter");
+    const count = document.getElementById("matchupCount");
+    const clear = document.getElementById("clearSearch");
+    const cards = Array.from(document.querySelectorAll(".matchup-card"));
+
+    function normalize(value) {
+      return value.toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    function applySearch() {
+      const terms = normalize(input.value).split(" ").filter(Boolean);
+      const character = characterFilter.value;
+      let visible = 0;
+
+      for (const card of cards) {
+        const matchedKeyword = terms.every((term) => normalize(card.dataset.search || card.textContent).includes(term));
+        const matchedCharacter = !character || card.dataset.character === character;
+        const matched = matchedKeyword && matchedCharacter;
+        card.hidden = !matched;
+        if (matched) visible += 1;
+      }
+
+      count.textContent = `${visible} / ${cards.length}件`;
+    }
+
+    input.addEventListener("input", applySearch);
+    characterFilter.addEventListener("change", applySearch);
+    clear.addEventListener("click", () => {
+      input.value = "";
+      characterFilter.value = "";
+      input.focus();
+      applySearch();
+    });
+    applySearch();
+  </script>
+</body>
+</html>

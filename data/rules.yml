@@ -25,3 +25,34 @@ labels:
   whiff: "空振り"
   plus: "有利"
   punishable: "確反あり"
+
+normal_case_tree:
+  first_layer: "通常技"
+  outcomes:
+    whiff:
+      label: "空振り"
+      action: "差し返し間合いと次回の振り方をTODO確認"
+    block:
+      label: "ガードさせた"
+      ranges:
+        close:
+          label: "密着"
+          action: "密着ガード時の投げ間合い・暴れ潰し・確反有無をTODO確認"
+        mid:
+          label: "中間"
+          action: "中間距離ガード時の継続可否と差し返しリスクをTODO確認"
+        tip:
+          label: "先端"
+          action: "先端ガード時の安全度と次の置き技をTODO確認"
+    hit:
+      label: "ヒット"
+      ranges:
+        close:
+          label: "密着"
+          action: "密着ヒット時のコンボ・投げ択・起き攻めをTODO確認"
+        mid:
+          label: "中間"
+          action: "中間距離ヒット時の連係・キャンセル可否をTODO確認"
+        tip:
+          label: "先端"
+          action: "先端ヒット時の追撃可否と距離調整をTODO確認"

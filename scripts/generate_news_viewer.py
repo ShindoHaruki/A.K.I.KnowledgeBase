@@ -1,0 +1,385 @@
+"""Generate news_viewer.html from data/news.yml."""
+
+from html import escape
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data" / "news.yml"
+OUT = ROOT / "news_viewer.html"
+
+
+def h(value):
+    return escape(str(value or ""))
+
+
+def news_item(item):
+    tags = " ".join(item.get("tags", []))
+    return f"""
+    <article class="news-item" data-search="{h(' '.join([item.get('date', ''), item.get('category', ''), item.get('title', ''), item.get('body', ''), tags]))}">
+      <div class="news-meta">
+        <span>{h(item.get("date", ""))}</span>
+        <strong>{h(item.get("category", "お知らせ"))}</strong>
+      </div>
+      <h2>{h(item.get("title", "お知らせ"))}</h2>
+      <p>{h(item.get("body", ""))}</p>
+    </article>
+    """
+
+
+def main():
+    data = yaml.safe_load(DATA.read_text(encoding="utf-8"))
+    items = data.get("items", [])
+    item_html = "\n".join(news_item(item) for item in items)
+    html = f"""<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A.K.I. Knowledge Base - お知らせ</title>
+  <style>
+    :root {{
+      --bg: #111820;
+      --panel: #18222d;
+      --soft: #202c38;
+      --ink: #eef4f8;
+      --muted: #9aa8b5;
+      --line: #31404f;
+      --accent: #59b7c8;
+      --accent-soft: #173845;
+    }}
+
+    * {{ box-sizing: border-box; }}
+
+    body {{
+      margin: 0;
+      font-family: system-ui, "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }}
+
+    header {{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px 20px;
+      background: rgba(17, 24, 32, 0.94);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(10px);
+    }}
+
+    .header-inner,
+    .tool-panel,
+    main {{
+      max-width: 1120px;
+      margin: 0 auto;
+    }}
+
+    h1 {{
+      margin: 0 0 4px;
+      font-size: 21px;
+    }}
+
+    .meta {{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }}
+
+    .page-tabs {{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }}
+
+    .page-tabs a {{
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }}
+
+    .page-tabs a.active {{
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #d7f7ff;
+    }}
+
+    .tool-panel {{
+      padding: 14px 20px 0;
+    }}
+
+    .tool-box {{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+    }}
+
+    label {{
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }}
+
+    input,
+    button {{
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #111820;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }}
+
+    input {{
+      width: 100%;
+      padding: 0 12px;
+    }}
+
+    button {{
+      padding: 0 12px;
+      background: var(--soft);
+      font-weight: 800;
+      cursor: pointer;
+    }}
+
+    main {{
+      padding: 22px 20px 42px;
+    }}
+
+    .summary {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }}
+
+    .news-list {{
+      display: grid;
+      gap: 10px;
+    }}
+
+    .news-item {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+    }}
+
+    .news-item[hidden] {{
+      display: none;
+    }}
+
+    .news-meta {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }}
+
+    .news-meta strong {{
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #d7f7ff;
+      font-size: 12px;
+    }}
+
+    .news-item p {{
+      margin: 0;
+      padding: 4px 14px 14px;
+      color: #d0dae3;
+      font-size: 14px;
+      line-height: 1.55;
+    }}
+
+    .news-item h2 {{
+      margin: 0;
+      padding: 12px 14px 4px;
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.35;
+    }}
+
+    .pager {{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }}
+
+    .pager button.active {{
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #d7f7ff;
+    }}
+
+    @media (max-width: 720px) {{
+      .tool-box {{
+        grid-template-columns: 1fr;
+      }}
+
+      .summary {{
+        align-items: flex-start;
+        flex-direction: column;
+      }}
+    }}
+
+    @media (max-width: 520px) {{
+      header {{
+        padding: 14px 14px;
+      }}
+
+      .tool-panel {{
+        padding: 12px 14px 0;
+      }}
+
+      main {{
+        padding: 18px 14px 34px;
+      }}
+
+      .page-tabs a {{
+        flex: 1 1 100%;
+        justify-content: center;
+      }}
+    }}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>A.K.I. Knowledge Base</h1>
+      <p class="meta">お知らせ / {h(data.get("version", "TODO"))}</p>
+      <nav class="page-tabs" aria-label="ページ切替">
+        <a class="active" href="news_viewer.html">お知らせ</a>
+        <a href="situation_viewer.html">通常技組み合わせ</a>
+        <a href="matchup_viewer.html">キャラ対</a>
+      </nav>
+    </div>
+  </header>
+  <div class="tool-panel">
+    <div class="tool-box">
+      <div>
+        <label for="newsSearch">検索</label>
+        <input id="newsSearch" type="search" placeholder="例: リリー 風 スパイア">
+      </div>
+      <button id="clearSearch" type="button">クリア</button>
+    </div>
+  </div>
+  <main>
+    <div class="summary">
+      <span id="newsCount"></span>
+      <span>10件ごとに表示</span>
+    </div>
+    <section class="news-list" aria-label="お知らせ一覧">
+      {item_html}
+    </section>
+    <nav class="pager" id="pager" aria-label="お知らせページ"></nav>
+  </main>
+  <script>
+    const pageSize = 10;
+    const input = document.getElementById("newsSearch");
+    const clear = document.getElementById("clearSearch");
+    const count = document.getElementById("newsCount");
+    const pager = document.getElementById("pager");
+    const items = Array.from(document.querySelectorAll(".news-item"));
+    let currentPage = 1;
+
+    function normalize(value) {{
+      return value.toLowerCase().replace(/\\s+/g, " ").trim();
+    }}
+
+    function filteredItems() {{
+      const terms = normalize(input.value).split(" ").filter(Boolean);
+      return items.filter((item) => {{
+        const haystack = normalize(item.dataset.search || item.textContent);
+        return terms.every((term) => haystack.includes(term));
+      }});
+    }}
+
+    function renderPager(pageCount) {{
+      pager.innerHTML = "";
+      if (pageCount <= 1) return;
+
+      for (let page = 1; page <= pageCount; page += 1) {{
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = page;
+        button.className = page === currentPage ? "active" : "";
+        button.addEventListener("click", () => {{
+          currentPage = page;
+          applyView();
+          window.scrollTo({{ top: 0, behavior: "smooth" }});
+        }});
+        pager.appendChild(button);
+      }}
+    }}
+
+    function applyView() {{
+      const visible = filteredItems();
+      const pageCount = Math.max(1, Math.ceil(visible.length / pageSize));
+      currentPage = Math.min(currentPage, pageCount);
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const visibleSet = new Set(visible.slice(start, end));
+
+      for (const item of items) {{
+        item.hidden = !visibleSet.has(item);
+      }}
+
+      count.textContent = `${{visible.length}} / ${{items.length}}件`;
+      renderPager(pageCount);
+    }}
+
+    input.addEventListener("input", () => {{
+      currentPage = 1;
+      applyView();
+    }});
+    clear.addEventListener("click", () => {{
+      input.value = "";
+      currentPage = 1;
+      input.focus();
+      applyView();
+    }});
+    applyView();
+  </script>
+</body>
+</html>
+"""
+    OUT.write_text(html, encoding="utf-8")
+    print(f"generated: {OUT}")
+
+
+if __name__ == "__main__":
+    main()
