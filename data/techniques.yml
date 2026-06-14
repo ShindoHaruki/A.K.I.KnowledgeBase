@@ -1,0 +1,18 @@
+version: "2026-06-14"
+items: []
+
+template:
+  title: "テクニック名"
+  summary: "どんな場面で使うテクニックかを書く。"
+  merits:
+    - "成功した時のリターン"
+    - "相手に意識させられること"
+  demerits:
+    - "失敗した時のリスク"
+    - "有効ではない相手行動"
+  references:
+    - title: "参考動画や資料"
+      url: "https://www.youtube.com/watch?v=..."
+      note: "YouTubeのURLを入れると、対応している形式なら動画を埋め込み表示できます。"
+  notes: |
+    補足、検証メモ、入力精度、キャラ限定など。

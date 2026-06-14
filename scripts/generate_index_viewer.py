@@ -2,6 +2,7 @@
 
 from html import escape
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 import yaml
 
@@ -9,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NEWS = ROOT / "data" / "news.yml"
 MATCHUPS = ROOT / "data" / "aki_matchups.yml"
 ROUTES = ROOT / "data" / "aki_situation_routes.yml"
+TECHNIQUES = ROOT / "data" / "techniques.yml"
 OUT = ROOT / "index.html"
 
 
@@ -26,6 +28,58 @@ def badges(items):
     if not items:
         return '<span class="todo">TODO</span>'
     return "".join(f"<span>{h(item)}</span>" for item in items)
+
+
+def youtube_embed_url(url):
+    parsed = urlparse(url or "")
+    host = parsed.netloc.lower().replace("www.", "")
+    video_id = ""
+
+    if host in {"youtube.com", "m.youtube.com"}:
+        if parsed.path == "/watch":
+            video_id = parse_qs(parsed.query).get("v", [""])[0]
+        elif parsed.path.startswith("/shorts/") or parsed.path.startswith("/embed/"):
+            video_id = parsed.path.strip("/").split("/", 1)[1]
+    elif host == "youtu.be":
+        video_id = parsed.path.strip("/").split("/")[0]
+
+    if not video_id:
+        return ""
+    return f"https://www.youtube.com/embed/{h(video_id)}"
+
+
+def reference_items(items):
+    if not items:
+        return '<p class="todo-text">TODO</p>'
+
+    rendered = []
+    for item in items:
+        title = item.get("title", "参考資料") if isinstance(item, dict) else "参考資料"
+        url = item.get("url", "") if isinstance(item, dict) else str(item)
+        note = item.get("note", "") if isinstance(item, dict) else ""
+        embed_url = youtube_embed_url(url)
+        link = (
+            f'<a href="{h(url)}" target="_blank" rel="noopener noreferrer">{h(title)}</a>'
+            if url and url != "TODO"
+            else f"<span>{h(title)}</span>"
+        )
+        embed = (
+            f'<div class="video-frame"><iframe src="{embed_url}" title="{h(title)}" '
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
+            "allowfullscreen></iframe></div>"
+            if embed_url
+            else ""
+        )
+        rendered.append(
+            f"""
+            <div class="reference-item">
+              {link}
+              <p>{h(note)}</p>
+              {embed}
+            </div>
+            """
+        )
+    return "\n".join(rendered)
 
 
 def news_item(item):
@@ -160,10 +214,63 @@ def route_card(route):
     """
 
 
+def technique_card(item):
+    search = " ".join(
+        [
+            item.get("title", ""),
+            item.get("summary", ""),
+            " ".join(item.get("merits", [])),
+            " ".join(item.get("demerits", [])),
+            " ".join(
+                " ".join(
+                    [
+                        ref.get("title", ""),
+                        ref.get("url", ""),
+                        ref.get("note", ""),
+                    ]
+                )
+                for ref in item.get("references", [])
+                if isinstance(ref, dict)
+            ),
+            item.get("notes", ""),
+        ]
+    )
+    return f"""
+      <article class="technique-card" data-search="{h(search)}">
+        <div class="card-head">
+          <h2>{h(item.get("title", "TODO"))}</h2>
+        </div>
+        <section class="block overview">
+          <h3>概要</h3>
+          <p>{h(item.get("summary", "TODO"))}</p>
+        </section>
+        <div class="two-grid">
+          <section class="block merits">
+            <h3>メリット</h3>
+            <ul>{list_items(item.get("merits", []))}</ul>
+          </section>
+          <section class="block demerits">
+            <h3>デメリット</h3>
+            <ul>{list_items(item.get("demerits", []))}</ul>
+          </section>
+        </div>
+        <section class="block references">
+          <h3>参考資料</h3>
+          {reference_items(item.get("references", []))}
+        </section>
+        <section class="block notes">
+          <h3>備考</h3>
+          <p>{h(item.get("notes", "TODO"))}</p>
+        </section>
+      </article>
+    """
+
+
 def main():
     news_data = yaml.safe_load(NEWS.read_text(encoding="utf-8"))
     matchup_data = yaml.safe_load(MATCHUPS.read_text(encoding="utf-8"))
     route_data = yaml.safe_load(ROUTES.read_text(encoding="utf-8"))
+    technique_data = yaml.safe_load(TECHNIQUES.read_text(encoding="utf-8"))
 
     news_html = "\n".join(news_item(item) for item in news_data.get("items", []))
 
@@ -182,6 +289,15 @@ def main():
 
     route_html = "\n".join(route_card(route) for route in route_data.get("routes", []))
     route_options = matchup_options
+    technique_items = technique_data.get("items", [])
+    technique_html = "\n".join(technique_card(item) for item in technique_items)
+    if not technique_html:
+        technique_html = """
+      <article class="empty-state">
+        <h2>テクニックはまだ登録されていません</h2>
+        <p>件名、概要、メリット、デメリット、参考資料、備考をそろえて追加していきます。</p>
+      </article>
+        """
 
     html = f"""<!doctype html>
 <html lang="ja">
@@ -290,7 +406,8 @@ def main():
     .view[hidden],
     .news-item[hidden],
     .route-card[hidden],
-    .matchup-card[hidden] {{
+    .matchup-card[hidden],
+    .technique-card[hidden] {{
       display: none;
     }}
 
@@ -304,6 +421,10 @@ def main():
       border-radius: 8px;
       background: var(--panel);
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+    }}
+
+    .tool-box.simple-tools {{
+      grid-template-columns: 1fr auto;
     }}
 
     label {{
@@ -346,7 +467,9 @@ def main():
 
     .news-item,
     .route-card,
-    .matchup-card {{
+    .matchup-card,
+    .empty-state,
+    .technique-card {{
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
@@ -379,6 +502,7 @@ def main():
     }}
 
     .news-item h2,
+    .empty-state h2,
     .card-head h2 {{
       margin: 0;
       padding: 12px 14px 4px;
@@ -388,6 +512,7 @@ def main():
     }}
 
     .news-item p,
+    .empty-state p,
     .block p,
     .goal {{
       margin: 0;
@@ -499,6 +624,53 @@ def main():
       overflow-wrap: anywhere;
     }}
 
+    .todo-text {{
+      margin: 0;
+      padding: 12px 14px 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }}
+
+    .reference-item {{
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }}
+
+    .reference-item:last-child {{
+      border-bottom: 0;
+    }}
+
+    .reference-item a,
+    .reference-item span {{
+      color: #d7f7ff;
+      font-size: 14px;
+      font-weight: 800;
+    }}
+
+    .reference-item p {{
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }}
+
+    .video-frame {{
+      margin-top: 10px;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #080c10;
+    }}
+
+    .video-frame iframe {{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }}
+
     .todo {{
       color: var(--muted);
     }}
@@ -514,6 +686,7 @@ def main():
 
     @media (max-width: 720px) {{
       .tool-box,
+      .tool-box.simple-tools,
       .two-grid,
       .premise-grid {{
         grid-template-columns: 1fr;
@@ -553,10 +726,11 @@ def main():
   <header>
     <div class="header-inner">
       <h1>A.K.I. Knowledge Base</h1>
-      <p class="meta">お知らせ / 通常技組み合わせ / キャラ対</p>
+      <p class="meta">お知らせ / テクニック / 通常技組み合わせ / キャラ対</p>
       <p class="site-notice">時間を見つけて開発しながら随時更新しています。AIと共同開発しているため、表記ゆれや整理途中の内容が含まれる可能性があります。</p>
       <nav class="page-tabs" aria-label="ページ切替">
         <button class="active" type="button" data-view-button="news">お知らせ</button>
+        <button type="button" data-view-button="techniques">テクニック</button>
         <button type="button" data-view-button="routes">通常技組み合わせ</button>
         <button type="button" data-view-button="matchups">キャラ対</button>
       </nav>
@@ -573,6 +747,20 @@ def main():
         {news_html}
       </section>
       <nav class="pager" id="newsPager" aria-label="お知らせページ"></nav>
+    </section>
+
+    <section class="view" data-view="techniques" hidden>
+      <div class="tool-box simple-tools">
+        <div>
+          <label for="techniqueSearch">検索</label>
+          <input id="techniqueSearch" type="search" placeholder="例: 詐欺飛び セットプレイ">
+        </div>
+        <button class="clear-button" id="clearTechniques" type="button">クリア</button>
+      </div>
+      <div class="summary"><span id="techniqueCount"></span></div>
+      <section class="card-list" aria-label="テクニック一覧">
+        {technique_html}
+      </section>
     </section>
 
     <section class="view" data-view="routes" hidden>
@@ -678,6 +866,29 @@ def main():
       renderNewsPager(pageCount);
     }}
 
+    const techniqueInput = document.getElementById("techniqueSearch");
+    const techniqueCards = Array.from(document.querySelectorAll(".technique-card"));
+    const techniqueCount = document.getElementById("techniqueCount");
+
+    function applyTechniques() {{
+      const terms = termsFrom(techniqueInput);
+      let visible = 0;
+      for (const card of techniqueCards) {{
+        const haystack = normalize(card.dataset.search || card.textContent);
+        const matched = terms.every((term) => haystack.includes(term));
+        card.hidden = !matched;
+        if (matched) visible += 1;
+      }}
+      techniqueCount.textContent = `${{visible}} / ${{techniqueCards.length}}件`;
+    }}
+
+    techniqueInput.addEventListener("input", applyTechniques);
+    document.getElementById("clearTechniques").addEventListener("click", () => {{
+      techniqueInput.value = "";
+      techniqueInput.focus();
+      applyTechniques();
+    }});
+
     const routeInput = document.getElementById("routeSearch");
     const routeCharacter = document.getElementById("routeCharacter");
     const routeCards = Array.from(document.querySelectorAll(".route-card"));
@@ -738,6 +949,7 @@ def main():
     }});
 
     applyNews();
+    applyTechniques();
     applyRoutes();
     applyMatchups();
   </script>

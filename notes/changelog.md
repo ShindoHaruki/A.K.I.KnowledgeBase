@@ -3,6 +3,7 @@
 ## 2026-06-14 / news page and navigation cleanup
 
 ### Added
+- `data/techniques.yml` を追加
 - `data/news.yml` を追加
 - `scripts/generate_index_viewer.py` を追加
 - `scripts/build_pages.py` を追加
@@ -20,6 +21,8 @@
 - Cloudflare Pages向けに `dist/index.html` だけを公開するビルド手順を追加
 - ヘッダーに開発中・随時更新・AI共同開発による表記ゆれの可能性を示す注意書きを追加
 - お知らせタブから検索欄を削除
+- `index.html` にテクニックタブを追加し、件名・概要・メリット・デメリット・参考資料・備考を表示できるようにした
+- 参考資料のYouTube URLを静的HTML内で埋め込み動画として表示できるようにした
 
 ### Notes
 - 通常技カードと投稿フォームは復活可能なように生成スクリプトを残す
