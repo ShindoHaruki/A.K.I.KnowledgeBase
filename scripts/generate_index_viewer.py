@@ -84,9 +84,13 @@ def reference_items(items):
 
 def news_item(item):
     tags = " ".join(item.get("tags", []))
+    published_at = " ".join(
+        part for part in [item.get("date", ""), item.get("time", "")] if part
+    )
     search = " ".join(
         [
             item.get("date", ""),
+            item.get("time", ""),
             item.get("category", ""),
             item.get("title", ""),
             item.get("body", ""),
@@ -96,7 +100,7 @@ def news_item(item):
     return f"""
       <article class="news-item" data-search="{h(search)}">
         <div class="news-meta">
-          <span>{h(item.get("date", ""))}</span>
+          <span>{h(published_at)}</span>
           <strong>{h(item.get("category", "お知らせ"))}</strong>
         </div>
         <h2>{h(item.get("title", "お知らせ"))}</h2>
