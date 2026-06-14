@@ -1,6 +1,14 @@
 version: "2026-06-14"
 items:
   - date: "2026-06-14"
+    category: "公開設定"
+    title: "公開用ファイルを軽くしました"
+    body: "Cloudflare Pagesでは公開対象をdistフォルダに絞り、閲覧に必要なindex.htmlだけを配信する形にしました。"
+    tags:
+      - "Cloudflare Pages"
+      - "公開設定"
+
+  - date: "2026-06-14"
     category: "表示改善"
     title: "1つのページで見られるようにしました"
     body: "お知らせ、通常技組み合わせ、キャラ対を1つのHTMLにまとめました。上部のタブで表示を切り替えられます。"
