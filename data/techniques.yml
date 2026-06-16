@@ -1,5 +1,18 @@
 version: "2026-06-14"
 items:
+  - title: "10F詐欺"
+    summary: "+6Fから2弱K重ね、+17Fから最速ラッシュ2弱K重ね。"
+    merits:
+      - "発生10Fまでの無敵技を詐欺しつつ重ねが可能。"
+      - "ラッシュ重ねの場合、打撃と投げとシミー（投げ間合い普通限定）の3択が可能。"
+    demerits: []
+    references:
+      - title: "10F詐欺 参考動画"
+        url: "https://youtu.be/hwOzCHhcs3Q"
+        note: "代表例や重ね方の確認用。"
+    notes: |
+      代表的なのはアキやベガのSA1とSA3、エドのSA1とSA3とODサイコアッパー、リリーのSA1など。
+
   - title: "9F詐欺"
     summary: "+5Fから5弱P重ね、+16Fから最速ラッシュ5弱P重ね。"
     merits:
