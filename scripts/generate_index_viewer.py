@@ -11,6 +11,7 @@ NEWS = ROOT / "data" / "news.yml"
 MATCHUPS = ROOT / "data" / "aki_matchups.yml"
 ROUTES = ROOT / "data" / "aki_situation_routes.yml"
 TECHNIQUES = ROOT / "data" / "techniques.yml"
+REFERENCE_TABLES = ROOT / "data" / "reference_tables.yml"
 OUT = ROOT / "index.html"
 
 
@@ -48,6 +49,29 @@ def youtube_embed_url(url):
     return f"https://www.youtube.com/embed/{h(video_id)}"
 
 
+def google_sheet_embed_url(table):
+    embed_url = table.get("embed_url", "")
+    if embed_url and embed_url != "TODO":
+        return embed_url
+
+    url = table.get("spreadsheet_url", "")
+    parsed = urlparse(url or "")
+    host = parsed.netloc.lower().replace("www.", "")
+    if host != "docs.google.com" or "/spreadsheets/d/" not in parsed.path:
+        return ""
+
+    parts = parsed.path.split("/")
+    try:
+        sheet_id = parts[parts.index("d") + 1]
+    except (ValueError, IndexError):
+        return ""
+
+    query = parse_qs(parsed.query)
+    gid = query.get("gid", [""])[0]
+    suffix = f"?gid={gid}&rm=minimal" if gid else "?rm=minimal"
+    return f"https://docs.google.com/spreadsheets/d/{sheet_id}/preview{suffix}"
+
+
 def reference_items(items):
     if not items:
         return '<p class="todo-text">TODO</p>'
@@ -80,6 +104,82 @@ def reference_items(items):
             """
         )
     return "\n".join(rendered)
+
+
+def table_items(tables):
+    if not tables:
+        return '<p class="todo-text">TODO</p>'
+
+    rendered = []
+    for table in tables:
+        title = table.get("title", "参考表")
+        sheet_name = table.get("sheet_name", "")
+        url = table.get("spreadsheet_url", "")
+        note = table.get("note", "")
+        embed_url = google_sheet_embed_url(table)
+        sheet_label = f'<span class="sheet-name">{h(sheet_name)}</span>' if sheet_name else ""
+        link = (
+            f'<a href="{h(url)}" target="_blank" rel="noopener noreferrer">別タブで開く</a>'
+            if url and url != "TODO"
+            else ""
+        )
+        embed = (
+            f'<div class="sheet-frame"><iframe src="{h(embed_url)}" title="{h(title)}" loading="lazy"></iframe></div>'
+            if embed_url
+            else '<p class="todo-text">埋め込みURLまたはGoogle Sheets URLを追加すると表を表示できます。</p>'
+        )
+        rendered.append(
+            f"""
+            <section class="reference-table">
+              <div class="reference-table-head">
+                <h3>{h(title)}</h3>
+                <div class="reference-links">{sheet_label}{link}</div>
+              </div>
+              <p>{h(note)}</p>
+              {embed}
+            </section>
+            """
+        )
+    return "\n".join(rendered)
+
+
+def reference_theme(item, index):
+    theme = item.get("theme", "テーマ")
+    description = item.get("description", "")
+    tables = item.get("tables", [])
+    search = " ".join(
+        [
+            theme,
+            description,
+            " ".join(
+                " ".join(
+                    [
+                        table.get("title", ""),
+                        table.get("sheet_name", ""),
+                        table.get("spreadsheet_url", ""),
+                        table.get("note", ""),
+                    ]
+                )
+                for table in tables
+            ),
+        ]
+    )
+    hidden = "" if index == 0 else " hidden"
+    return f"""
+      <article class="reference-card" data-reference-panel="{index}" data-search="{h(search)}"{hidden}>
+        <div class="card-head">
+          <h2>{h(theme)}</h2>
+        </div>
+        <section class="block overview">
+          <h3>概要</h3>
+          <p>{h(description or "TODO")}</p>
+        </section>
+        <section class="block references">
+          <h3>表</h3>
+          {table_items(tables)}
+        </section>
+      </article>
+    """
 
 
 def news_item(item):
@@ -275,6 +375,7 @@ def main():
     matchup_data = yaml.safe_load(MATCHUPS.read_text(encoding="utf-8"))
     route_data = yaml.safe_load(ROUTES.read_text(encoding="utf-8"))
     technique_data = yaml.safe_load(TECHNIQUES.read_text(encoding="utf-8"))
+    reference_data = yaml.safe_load(REFERENCE_TABLES.read_text(encoding="utf-8"))
 
     news_html = "\n".join(news_item(item) for item in news_data.get("items", []))
 
@@ -300,6 +401,21 @@ def main():
       <article class="empty-state">
         <h2>テクニックはまだ登録されていません</h2>
         <p>件名、概要、メリット、デメリット、参考資料、備考をそろえて追加していきます。</p>
+      </article>
+        """
+    reference_items_data = reference_data.get("items", [])
+    reference_tabs = "\n".join(
+        f'<button class="{"" if index else "active"}" type="button" data-reference-tab="{index}">{h(item.get("theme", "テーマ"))}</button>'
+        for index, item in enumerate(reference_items_data)
+    )
+    reference_html = "\n".join(
+        reference_theme(item, index) for index, item in enumerate(reference_items_data)
+    )
+    if not reference_html:
+        reference_html = """
+      <article class="empty-state">
+        <h2>参考資料はまだ登録されていません</h2>
+        <p>テーマごとに確認したい表を追加していきます。</p>
       </article>
         """
 
@@ -411,7 +527,8 @@ def main():
     .news-item[hidden],
     .route-card[hidden],
     .matchup-card[hidden],
-    .technique-card[hidden] {{
+    .technique-card[hidden],
+    .reference-card[hidden] {{
       display: none;
     }}
 
@@ -473,7 +590,8 @@ def main():
     .route-card,
     .matchup-card,
     .empty-state,
-    .technique-card {{
+    .technique-card,
+    .reference-card {{
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
@@ -675,6 +793,93 @@ def main():
       display: block;
     }}
 
+    .reference-nav {{
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }}
+
+    .reference-nav button {{
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }}
+
+    .reference-nav button.active {{
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #d7f7ff;
+    }}
+
+    .reference-table {{
+      border-bottom: 1px solid var(--line);
+    }}
+
+    .reference-table:last-child {{
+      border-bottom: 0;
+    }}
+
+    .reference-table-head {{
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px 4px;
+    }}
+
+    .reference-table-head h3 {{
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+    }}
+
+    .reference-links {{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      font-weight: 800;
+    }}
+
+    .reference-links a {{
+      color: #d7f7ff;
+    }}
+
+    .sheet-name {{
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #d7f7ff;
+    }}
+
+    .sheet-frame {{
+      height: min(72vh, 720px);
+      min-height: 420px;
+      margin: 10px 14px 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #080c10;
+    }}
+
+    .sheet-frame iframe {{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }}
+
     .todo {{
       color: var(--muted);
     }}
@@ -697,6 +902,11 @@ def main():
       }}
 
       .summary {{
+        align-items: flex-start;
+        flex-direction: column;
+      }}
+
+      .reference-table-head {{
         align-items: flex-start;
         flex-direction: column;
       }}
@@ -730,11 +940,12 @@ def main():
   <header>
     <div class="header-inner">
       <h1>A.K.I. Knowledge Base</h1>
-      <p class="meta">お知らせ / テクニック / 通常技組み合わせ / キャラ対</p>
+      <p class="meta">お知らせ / テクニック / 参考資料 / 通常技組み合わせ / キャラ対</p>
       <p class="site-notice">時間を見つけて開発しながら随時更新しています。AIと共同開発しているため、表記ゆれや整理途中の内容が含まれる可能性があります。</p>
       <nav class="page-tabs" aria-label="ページ切替">
         <button class="active" type="button" data-view-button="news">お知らせ</button>
         <button type="button" data-view-button="techniques">テクニック</button>
+        <button type="button" data-view-button="references">参考資料</button>
         <button type="button" data-view-button="routes">通常技組み合わせ</button>
         <button type="button" data-view-button="matchups">キャラ対</button>
       </nav>
@@ -764,6 +975,16 @@ def main():
       <div class="summary"><span id="techniqueCount"></span></div>
       <section class="card-list" aria-label="テクニック一覧">
         {technique_html}
+      </section>
+    </section>
+
+    <section class="view" data-view="references" hidden>
+      <nav class="reference-nav" aria-label="参考資料テーマ">
+        {reference_tabs}
+      </nav>
+      <div class="summary"><span id="referenceCount"></span></div>
+      <section class="card-list" aria-label="参考資料一覧">
+        {reference_html}
       </section>
     </section>
 
@@ -893,6 +1114,24 @@ def main():
       applyTechniques();
     }});
 
+    const referenceTabs = Array.from(document.querySelectorAll("[data-reference-tab]"));
+    const referenceCards = Array.from(document.querySelectorAll(".reference-card"));
+    const referenceCount = document.getElementById("referenceCount");
+
+    function setReferencePanel(index) {{
+      for (const card of referenceCards) {{
+        card.hidden = card.dataset.referencePanel !== String(index);
+      }}
+      for (const button of referenceTabs) {{
+        button.classList.toggle("active", button.dataset.referenceTab === String(index));
+      }}
+      referenceCount.textContent = `${{referenceCards.length ? 1 : 0}} / ${{referenceCards.length}}件`;
+    }}
+
+    for (const button of referenceTabs) {{
+      button.addEventListener("click", () => setReferencePanel(button.dataset.referenceTab));
+    }}
+
     const routeInput = document.getElementById("routeSearch");
     const routeCharacter = document.getElementById("routeCharacter");
     const routeCards = Array.from(document.querySelectorAll(".route-card"));
@@ -954,6 +1193,7 @@ def main():
 
     applyNews();
     applyTechniques();
+    setReferencePanel(0);
     applyRoutes();
     applyMatchups();
   </script>

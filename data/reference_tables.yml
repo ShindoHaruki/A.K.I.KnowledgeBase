@@ -1,0 +1,12 @@
+version: "2026-06-21"
+items: []
+
+template:
+  theme: "テーマ名"
+  description: "このテーマで確認できる表の概要。"
+  tables:
+    - title: "表の名前"
+      sheet_name: "シート名"
+      spreadsheet_url: "https://docs.google.com/spreadsheets/d/..."
+      embed_url: "https://docs.google.com/spreadsheets/d/e/.../pubhtml?widget=true&headers=false"
+      note: "補足や更新メモ。"
