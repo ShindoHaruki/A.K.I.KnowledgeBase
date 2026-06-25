@@ -1,204 +1,868 @@
-version: "TODO: matchup version / date"
-game: "Street Fighter 6"
-character: "A.K.I."
-source_notes:
-  - "TODO: matchup source / lab notes"
-  - "2026-06-14 user notes: 対A.K.I.戦の対策"
-  - "2026-06-14 user notes: 対リリー戦の対策"
-  - "2026-06-14 user notes: 対ルーク戦の対策"
-  - "2026-06-14 user notes: 対リュウ戦の対策"
-  - "2026-06-17 user notes: 対ラシード戦の対策"
-  - "2026-06-17 user notes: 対マリーザ戦の対策"
-  - "2026-06-18 user notes: 対マノン戦の対策"
-
-matchups:
-  - character: "マノン"
-    status: "検証中"
-    tags:
-      - "毒沼"
-      - "10F詐欺"
-      - "Dリバ"
-      - "デガジェ"
-      - "SA対策"
-    overview: "毒沼も活用してマノンに攻めさせる。飛びだけは要注意。"
-    watch_out:
-      - "リーチの長い技が多いため、ちょこちょこ被弾すると最終的にダメージレースで負けやすい。"
-    punish:
-      - "デガジェ系はガードできたら基本的には5強Kで開始。"
-    effective_options:
-      - "SA2が溜まるまでは10F詐欺が有効。"
-      - "SA2をガードできたら、ガード＞ガード＞バクステ＞バクステ＞沼設置＞5強K。"
-      - "中PラッシュにDリバを見せる。間に合わなくても意思表示としてあり。"
-    notes: |
-      SA1の発生は10F、SA2とSA3の発生は7F。SA3は投げ属性。
-
-  - character: "マリーザ"
-    status: "検証中"
-    tags:
-      - "グラディウス"
-      - "ファランクス"
-      - "スクトゥム"
-      - "9F詐欺"
-      - "Dリバ"
-    overview: "待ち気味に戦い、置き技を空振らないことを意識する。たまに垂直を見せ、差し込みは2強Kを軸にして場合によってはSAへつなぐ。溜め5強P、ファランクス、グラディウスにはジャストパリィを積極的に狙う。起き攻めは投げの割合を増やしてもよい。相手のキャンセルラッシュにはDリバが生きやすく、マリーザ側の確定反撃もそこまで大きくない。"
-    watch_out:
-      - "Dゲージ削りや有利を無理やり継続してくる連携が多いため、中途半端な打ち返しは負け筋になりやすい。"
-    punish:
-      - "マリーザの5中Pターゲットコンボ後にラッシュせず攻撃をやめた場合、こちらが+8F。"
-      - "マリーザの5中Pターゲットコンボガード後は+8F。"
-    effective_options:
-      - "9F詐欺が有効。"
-      - "グラディウスの空振りはラッシュで詰める。できたら強いが、無理に差し返しを狙わない。"
-      - "マリーザがよくやるグラディウス対空には着地インパクトが入る。"
-      - "溜めグラディウス対空のケースが発生したら、着地投げか着地SAも視野。"
-      - "スクトゥムに対してはインパクトか投げ。長押しには負けるので読み合い。"
-      - "マリーザの5中PターゲットコンボからラッシュはDリバ。"
-      - "マリーザのラッシュ2中Kガード時は後ろ歩き推奨。2弱K＞2弱Pが当たらない。"
-      - "マリーザのラッシュ5強Pガード後はバックジャンプがおすすめ。-1Fだけなので読み合い。"
-      - "被画面端であれば前ジャンプ＞早出しJ強P。ジャンプ中Pターゲットコンボ狩りになるケースあり。"
-      - "詐欺飛びを仕掛けるのであれば、弱技から入るとODスクトゥムの反撃をもらわない。"
-    notes: |
-      SA1の発生は9F、SA3の発生は13F。
-
-  - character: "ラシード"
-    status: "検証中"
-    tags:
-      - "ワール"
-      - "サイクロン"
-      - "イウサール"
-      - "9F詐欺"
-      - "弾抜け"
-    overview: "相手の出方次第では前ジャンプ、生ラッシュ多めでも可。溜めワールなどに対する弾抜け猛毒牙を意識させるため、伏せ置きなども選択肢に入れる。終盤に差し掛かるにつれて弾抜けのスライディングを警戒した立ち回りを意識する。"
-    watch_out:
-      - "中Pからサイクロン系統などの散らし択に注意。"
-      - "強Pから強サイクロンのぼったくり択に注意。"
-    punish:
-      - "スライディングガード後は距離にもよるが、基本は確定反撃あり。"
-    effective_options:
-      - "9F詐欺が有効。"
-      - "OD無敵後に溜めワールするパターンであれば、その場受け身から前ジャンプでフルコンを狙える。"
-      - "強サイクロンをジャストパリィした場合はインパクト。"
-      - "強サイクロンの手前の技にもよるが割り込みが可能。"
-      - "強サイクロンから転がる派生は、ジャストパリィか5弱K暴れも択としてあり。"
-      - "イウサールは基本ガンガード。中段やすかし下段などを見て冷静に対処したい。"
-      - "起き攻めで垂直強Pを選択すると強ミキサーを潰しやすい傾向あり。"
-    notes: |
-      SA1の発生は9F、SA3の発生は11F。
-
-  - character: "リュウ"
-    status: "検証中"
-    tags:
-      - "中距離"
-      - "波動対策"
-      - "波掌撃"
-      - "足刀"
-      - "SA対策"
-    overview: "5中Kを軸に中距離を意識する。無理にDゲージを吐かないほうがよい。"
-    watch_out:
-      - "弱技の刻みに対し、むやみに打ち返しを狙わない。"
-      - "一部の技で締めた時、持続中段が行えるため警戒。"
-    punish: []
-    effective_options:
-      - "強波掌撃にジャストパリィトライ。自信があるならインパクトもあり。"
-      - "集中済みの時に2中Kから強化波掌をする人も一定数いる。インパクトできたらおいしいかも。"
-      - "リバサSA2の場合は垂直強Pを選択推奨。"
-      - "足刀への対応として、バクステ、垂直、パリィなどを確認。"
-    notes: |
-      SA1の発生は7F、SA2の発生は12F、SA3の発生は5F。
-      リュウ側は歩く速度がそこまでなので追うのが難しい。近距離になると波掌や大ゴスなど色々向き合う必要が出る。
-      波動/波掌撃に対して生ラッシュを通す。A.K.I.側が比較的やれるが、相手の暴れやOD昇龍を誘う攻め方が大事。
-
-  - character: "ケン"
-    status: "TODO"
-    tags:
-      - "サンプル"
-      - "ラッシュ対策"
-    overview: "TODO: ケン戦の全体方針を書く。"
-    watch_out:
-      - "TODO: 龍尾脚"
-      - "TODO: ラッシュからの投げ/打撃"
-    punish:
-      - "TODO: 確反ポイント"
-    effective_options:
-      - "TODO: 有効な通常技・組み合わせ"
-    notes: |
-      検索テスト用サンプル。
-
-  - character: "ルーク"
-    status: "検証中"
-    tags:
-      - "中距離"
-      - "サンドブラスト"
-      - "ナックル"
-      - "サプレッサー"
-      - "対空"
-    overview: "5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。"
-    watch_out:
-      - "サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。"
-      - "ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。"
-      - "ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。"
-      - "垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。"
-      - "遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。"
-    punish: []
-    effective_options:
-      - "サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。"
-      - "強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。"
-      - "前投げから前ステは0F状況。弱K暴れは有効。"
-      - "前強Pターゲットコンボは4F技で割り込み可能。"
-    notes: |
-      SA1は発生6F、SA2は発生5F、SA3は発生10F。
-      お互いの距離がある程度離れている場合は伏せ置き。
-      猛毒牙による弾抜けの択を狙う。
-
-  - character: "A.K.I."
-    status: "検証中"
-    tags:
-      - "同キャラ"
-      - "起き攻め"
-      - "ジャストパリィ"
-      - "毒状態"
-      - "バーンアウト"
-    overview: "起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。"
-    watch_out:
-      - "毒状態の時はリターンを考慮し、前ジャンプは控えめにする。"
-      - "ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。"
-      - "弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。"
-    punish:
-      - "5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。"
-      - "弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。"
-    effective_options:
-      - "Dリバ詐欺が機能する組み合わせ"
-      - "10F詐欺の起き攻め"
-      - "紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。"
-      - "弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。"
-      - "OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。"
-      - "BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。"
-    notes: |
-      SA1、SA3の発生はともに10F。
-      紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
-
-  - character: "リリー"
-    status: "検証中"
-    tags:
-      - "風"
-      - "スパイア"
-      - "起き攻め"
-      - "Dリバ"
-      - "差し返し"
-    overview: "風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。"
-    watch_out:
-      - "風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。"
-      - "風利用ODスパイアガード時は早めのDリバで拒否推奨。"
-      - "風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。"
-    punish:
-      - "風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。"
-    effective_options:
-      - "SA3が溜まるまでは9F詐欺の起き攻めが有効。"
-      - "2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。"
-      - "弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。"
-      - "風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。"
-    notes: |
-      SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
-      風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
-      リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
-      理想は風を溜められる前に体力リードを作りたい。
+"version": "TODO: matchup version / date"
+"game": "Street Fighter 6"
+"character": "A.K.I."
+"source_notes":
+- "TODO: matchup source / lab notes"
+- "2026-06-14 user notes: 対A.K.I.戦の対策"
+- "2026-06-14 user notes: 対リリー戦の対策"
+- "2026-06-14 user notes: 対ルーク戦の対策"
+- "2026-06-14 user notes: 対リュウ戦の対策"
+- "2026-06-17 user notes: 対ラシード戦の対策"
+- "2026-06-17 user notes: 対マリーザ戦の対策"
+- "2026-06-18 user notes: 対マノン戦の対策"
+- "2026-06-26 Ultimate Frame Data SF6: Super Arts startup / on hit / on block"
+"matchups":
+- "character": "リュウ"
+  "status": "検証中"
+  "tags":
+  - "中距離"
+  - "波動対策"
+  - "波掌撃"
+  - "足刀"
+  - "SA対策"
+  "overview": "5中Kを軸に中距離を意識する。無理にDゲージを吐かないほうがよい。"
+  "watch_out":
+  - "弱技の刻みに対し、むやみに打ち返しを狙わない。"
+  - "一部の技で締めた時、持続中段が行えるため警戒。"
+  "punish": []
+  "effective_options":
+  - "強波掌撃にジャストパリィトライ。自信があるならインパクトもあり。"
+  - "集中済みの時に2中Kから強化波掌をする人も一定数いる。インパクトできたらおいしいかも。"
+  - "リバサSA2の場合は垂直強Pを選択推奨。"
+  - "足刀への対応として、バクステ、垂直、パリィなどを確認。"
+  "notes": |
+    SA1の発生は7F、SA2の発生は12F、SA3の発生は5F。
+    リュウ側は歩く速度がそこまでなので追うのが難しい。近距離になると波掌や大ゴスなど色々向き合う必要が出る。
+    波動/波掌撃に対して生ラッシュを通す。A.K.I.側が比較的やれるが、相手の暴れやOD昇龍を誘う攻め方が大事。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Shinku Hadoken (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +TODO"
+    "on_block": "-24F"
+  - "level": "SA2"
+    "name": "Shin Hashogeki (Level 2)"
+    "startup": "12F"
+    "on_hit": "Knockdown +20F"
+    "on_block": "-20F"
+  - "level": "SA3"
+    "name": "Shin Shoryuken (Level 3)"
+    "startup": "5F"
+    "on_hit": "Knockdown +14F (Knockdown +14F)"
+    "on_block": "-52F"
+- "character": "ルーク"
+  "status": "検証中"
+  "tags":
+  - "中距離"
+  - "サンドブラスト"
+  - "ナックル"
+  - "サプレッサー"
+  - "対空"
+  "overview": "5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。"
+  "watch_out":
+  - "サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。"
+  - "ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。"
+  - "ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。"
+  - "垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。"
+  - "遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。"
+  "punish": []
+  "effective_options":
+  - "サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。"
+  - "強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。"
+  - "前投げから前ステは0F状況。弱K暴れは有効。"
+  - "前強Pターゲットコンボは4F技で割り込み可能。"
+  "notes": |
+    SA1は発生6F、SA2は発生5F、SA3は発生10F。
+    お互いの距離がある程度離れている場合は伏せ置き。
+    猛毒牙による弾抜けの択を狙う。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Vulcan Blast (Level 1)"
+    "startup": "6F"
+    "on_hit": "Knockdown +17F"
+    "on_block": "-29F"
+  - "level": "SA2"
+    "name": "Eraser (Level 2)"
+    "startup": "5F"
+    "on_hit": "Knockdown +2F"
+    "on_block": "-29F"
+  - "level": "SA3"
+    "name": "Pale Rider (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +18F (Knockdown +18F)"
+    "on_block": "-42F"
+- "character": "ジェイミー"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Breakin' (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +7F (Knockdown -1F)"
+    "on_block": "-60F (-93F)"
+  - "level": "SA2"
+    "name": "The Devil's Song (Level 2)"
+    "startup": "1F"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Getsuga Saiho (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +71F (Knockdown +18F)"
+    "on_block": "-27F"
+- "character": "春麗"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Kikosho (Level 1)"
+    "startup": "7F (7F)"
+    "on_hit": "Knockdown +22F (TODO)"
+    "on_block": "-22F (TODO)"
+  - "level": "SA2"
+    "name": "Hoyoku-sen (Level 2)"
+    "startup": "12F"
+    "on_hit": "Knockdown +29. Juggle State on hit (requires Jump Cancel)."
+    "on_block": "-35F"
+  - "level": "SA3"
+    "name": "Soten Ranka (Level 3)"
+    "startup": "8F"
+    "on_hit": "Knockdown +6F (Knockdown +18F)"
+    "on_block": "-24F"
+- "character": "ガイル"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Sonic Hurricane (Level 1)"
+    "startup": "8F (7F)"
+    "on_hit": "Knockdown +41F (Knockdown +70F)"
+    "on_block": "-26F (-2F)"
+  - "level": "SA2"
+    "name": "Solid Puncher (Level 2)"
+    "startup": "6F"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Crossfire Somersault (Level 3)"
+    "startup": "9F"
+    "on_hit": "Knockdown +16F (Knockdown +16F)"
+    "on_block": "-59F"
+- "character": "キンバリー"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Bushin Beats (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +22F (Knockdown +38F)"
+    "on_block": "-25F"
+  - "level": "SA2"
+    "name": "Bushin Scramble (Level 2)"
+    "startup": "13F"
+    "on_hit": "Knockdown +22F"
+    "on_block": "-25F"
+  - "level": "SA3"
+    "name": "Bushin Ninjastar Cypher (Level 3)"
+    "startup": "8F"
+    "on_hit": "Knockdown +16F (Knockdown +16F)"
+    "on_block": "-35F"
+- "character": "ジュリ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Sakkai Fuhazan (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +TODO (Knockdown +TODO)"
+    "on_block": "-32F (-31F)"
+  - "level": "SA2"
+    "name": "Feng Shui Engine (Level 2)"
+    "startup": "7F (9F)"
+    "on_hit": "TODO (+4F)"
+    "on_block": "TODO (-17F)"
+  - "level": "SA3"
+    "name": "Kaisen Dankai Raku (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +22F (Knockdown +20F)"
+    "on_block": "-31F"
+- "character": "ケン"
+  "status": "TODO"
+  "tags":
+  - "サンプル"
+  - "ラッシュ対策"
+  "overview": "TODO: ケン戦の全体方針を書く。"
+  "watch_out":
+  - "TODO: 龍尾脚"
+  - "TODO: ラッシュからの投げ/打撃"
+  "punish":
+  - "TODO: 確反ポイント"
+  "effective_options":
+  - "TODO: 有効な通常技・組み合わせ"
+  "notes": |
+    検索テスト用サンプル。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Dragonlash Flame (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +9F"
+    "on_block": "-24F"
+  - "level": "SA2"
+    "name": "Shippu Jinrai-kyaku (Level 2)"
+    "startup": "6F"
+    "on_hit": "Knockdown +36F"
+    "on_block": "-5F"
+  - "level": "SA3"
+    "name": "Shinryu Reppa (Level 3)"
+    "startup": "7F"
+    "on_hit": "Knockdown +15F (Knockdown +21F)"
+    "on_block": "-40F"
+- "character": "ブランカ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Shout of Earth (Level 1)"
+    "startup": "8F"
+    "on_hit": "Knockdown +15F"
+    "on_block": "-29F"
+  - "level": "SA2"
+    "name": "Lightning Beast (Level 2)"
+    "startup": "1F"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Ground Shave Cannonball (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +50F (Knockdown +14F)"
+    "on_block": "-46F"
+- "character": "ダルシム"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Yoga Inferno (Level 1)"
+    "startup": "10F"
+    "on_hit": "(Knockdown +24F) (Knockdown +24F) (Knockdown +27F)"
+    "on_block": "(-15F) (-15F) (-22F)"
+  - "level": "SA2"
+    "name": "Yoga Sunburst (Level 2)"
+    "startup": "7F (7F+???)"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Merciless Yoga (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +19F (Knockdown +19F)"
+    "on_block": "-62F"
+- "character": "エドモンド本田"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Show of Force (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +13..."
+    "on_block": "-33F"
+  - "level": "SA2"
+    "name": "Ultimate Killer Head Ram (Level 2)"
+    "startup": "12F"
+    "on_hit": "Knockdown +13F"
+    "on_block": "-27F"
+  - "level": "SA3"
+    "name": "The Final Bout (Level 3)"
+    "startup": "9F"
+    "on_hit": "Knockdown +11F (Knockdown +34F)"
+    "on_block": "-34F"
+- "character": "ディージェイ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "The Greatest Sobat (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +32F"
+    "on_block": "-12F"
+  - "level": "SA2"
+    "name": "Lowkey Sunrise Festival (Level 2)"
+    "startup": "12F"
+    "on_hit": "+6F (...Knockdown +29F)"
+    "on_block": "-29F"
+  - "level": "SA2"
+    "name": "Marvelous Sunrise Festival (Level 2)"
+    "startup": "12F"
+    "on_hit": "+6F (TODO)"
+    "on_block": "-29F"
+  - "level": "SA2"
+    "name": "Headliner Sunrise Festival (Level 2)"
+    "startup": "12F"
+    "on_hit": "+6F (TODO)"
+    "on_block": "-29F"
+  - "level": "SA3"
+    "name": "Weekend Pleasure (Level 3)"
+    "startup": "9F"
+    "on_hit": "Knockdown +26F (Knockdown +22F)"
+    "on_block": "-28F"
+- "character": "マノン"
+  "status": "検証中"
+  "tags":
+  - "毒沼"
+  - "10F詐欺"
+  - "Dリバ"
+  - "デガジェ"
+  - "SA対策"
+  "overview": "毒沼も活用してマノンに攻めさせる。飛びだけは要注意。"
+  "watch_out":
+  - "リーチの長い技が多いため、ちょこちょこ被弾すると最終的にダメージレースで負けやすい。"
+  "punish":
+  - "デガジェ系はガードできたら基本的には5強Kで開始。"
+  "effective_options":
+  - "SA2が溜まるまでは10F詐欺が有効。"
+  - "SA2をガードできたら、ガード＞ガード＞バクステ＞バクステ＞沼設置＞5強K。"
+  - "中PラッシュにDリバを見せる。間に合わなくても意思表示としてあり。"
+  "notes": |
+    SA1の発生は10F、SA2とSA3の発生は7F。SA3は投げ属性。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Arabesque (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +7..."
+    "on_block": "-49F"
+  - "level": "SA2"
+    "name": "Étoile (Level 2)"
+    "startup": "7F"
+    "on_hit": "Knockdown +32F"
+    "on_block": "-61F"
+  - "level": "SA3"
+    "name": "Pas de Deux (Level 3)"
+    "startup": "7F (6F+1F)"
+    "on_hit": "Knockdown +16F"
+    "on_block": "-65F"
+- "character": "マリーザ"
+  "status": "検証中"
+  "tags":
+  - "グラディウス"
+  - "ファランクス"
+  - "スクトゥム"
+  - "9F詐欺"
+  - "Dリバ"
+  "overview": "待ち気味に戦い、置き技を空振らないことを意識する。たまに垂直を見せ、差し込みは2強Kを軸にして場合によってはSAへつなぐ。溜め5強P、ファランクス、グラディウスにはジャストパリィを積極的に狙う。起き攻めは投げの割合を増やしてもよい。相手のキャンセルラッシュにはDリバが生きやすく、マリーザ側の確定反撃もそこまで大きくない。"
+  "watch_out":
+  - "Dゲージ削りや有利を無理やり継続してくる連携が多いため、中途半端な打ち返しは負け筋になりやすい。"
+  "punish":
+  - "マリーザの5中Pターゲットコンボ後にラッシュせず攻撃をやめた場合、こちらが+8F。"
+  - "マリーザの5中Pターゲットコンボガード後は+8F。"
+  "effective_options":
+  - "9F詐欺が有効。"
+  - "グラディウスの空振りはラッシュで詰める。できたら強いが、無理に差し返しを狙わない。"
+  - "マリーザがよくやるグラディウス対空には着地インパクトが入る。"
+  - "溜めグラディウス対空のケースが発生したら、着地投げか着地SAも視野。"
+  - "スクトゥムに対してはインパクトか投げ。長押しには負けるので読み合い。"
+  - "マリーザの5中PターゲットコンボからラッシュはDリバ。"
+  - "マリーザのラッシュ2中Kガード時は後ろ歩き推奨。2弱K＞2弱Pが当たらない。"
+  - "マリーザのラッシュ5強Pガード後はバックジャンプがおすすめ。-1Fだけなので読み合い。"
+  - "被画面端であれば前ジャンプ＞早出しJ強P。ジャンプ中Pターゲットコンボ狩りになるケースあり。"
+  - "詐欺飛びを仕掛けるのであれば、弱技から入るとODスクトゥムの反撃をもらわない。"
+  "notes": |
+    SA1の発生は9F、SA3の発生は13F。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Javelin of Marisa (Level 1)"
+    "startup": "19F (42F) (6F)"
+    "on_hit": "Knockdown +14F (Knockdown +35F) (Knockdown +46F)"
+    "on_block": "-43F (-43F) (TODO)"
+  - "level": "SA2"
+    "name": "Meteorite (Level 2)"
+    "startup": "9F (34F)"
+    "on_hit": "Knockdown +17F"
+    "on_block": "TODO (-44F)"
+  - "level": "SA3"
+    "name": "Goddess of the Hunt (Level 3)"
+    "startup": "13F"
+    "on_hit": "Knockdown +14F (Knockdown +14F)"
+    "on_block": "-39F"
+- "character": "ＪＰ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Chornobog (Level 1)"
+    "startup": "7F, 15F"
+    "on_hit": "Knockdown +22...+32F"
+    "on_block": "-33...-23F"
+  - "level": "SA2"
+    "name": "Lovushka (Level 2)"
+    "startup": "13F"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Interdiction (Level 3)"
+    "startup": "18F"
+    "on_hit": "Knockdown +23F (Knockdown +23F)"
+    "on_block": "-50F"
+- "character": "ザンギエフ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Aerial Russian Slam (Level 1)"
+    "startup": "11F"
+    "on_hit": "Knockdown +29F"
+    "on_block": "TODO"
+  - "level": "SA2"
+    "name": "Cyclone Lariat (Level 2)"
+    "startup": "18F"
+    "on_hit": "Knockdown +5F / Knockdown +87F / TODO / TODO"
+    "on_block": "-35F"
+  - "level": "SA3"
+    "name": "Bolshoi Storm Buster (Level 3)"
+    "startup": "6F (6F+0F)"
+    "on_hit": "Knockdown +26F"
+    "on_block": "TODO"
+- "character": "リリー"
+  "status": "検証中"
+  "tags":
+  - "風"
+  - "スパイア"
+  - "起き攻め"
+  - "Dリバ"
+  - "差し返し"
+  "overview": "風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。"
+  "watch_out":
+  - "風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。"
+  - "風利用ODスパイアガード時は早めのDリバで拒否推奨。"
+  - "風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。"
+  "punish":
+  - "風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。"
+  "effective_options":
+  - "SA3が溜まるまでは9F詐欺の起き攻めが有効。"
+  - "2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。"
+  - "弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。"
+  - "風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。"
+  "notes": |
+    SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
+    風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
+    リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
+    理想は風を溜められる前に体力リードを作りたい。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Breezing Hawk (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +27F"
+    "on_block": "-36F"
+  - "level": "SA2"
+    "name": "Thunderbird (Level 2)"
+    "startup": "9F (9F)"
+    "on_hit": "Knockdown +42F (Knockdown +43F)"
+    "on_block": "-60F (-59F)"
+  - "level": "SA3"
+    "name": "Raging Typhoon (Level 3)"
+    "startup": "7F (5F+2F)"
+    "on_hit": "Knockdown +4F"
+    "on_block": "TODO"
+- "character": "キャミィ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Spin Drive Smasher (Level 1)"
+    "startup": "9F"
+    "on_hit": "Knockdown +10F"
+    "on_block": "-24F"
+  - "level": "SA2"
+    "name": "Killer Bee Spin (Level 2)"
+    "startup": "13F"
+    "on_hit": "Knockdown +12F"
+    "on_block": "-24..."
+  - "level": "SA3"
+    "name": "Delta Red Assault (Level 3)"
+    "startup": "9F"
+    "on_hit": "Knockdown +17F (Knockdown +22F)"
+    "on_block": "-33F"
+- "character": "ラシード"
+  "status": "検証中"
+  "tags":
+  - "ワール"
+  - "サイクロン"
+  - "イウサール"
+  - "9F詐欺"
+  - "弾抜け"
+  "overview": "相手の出方次第では前ジャンプ、生ラッシュ多めでも可。溜めワールなどに対する弾抜け猛毒牙を意識させるため、伏せ置きなども選択肢に入れる。終盤に差し掛かるにつれて弾抜けのスライディングを警戒した立ち回りを意識する。"
+  "watch_out":
+  - "中Pからサイクロン系統などの散らし択に注意。"
+  - "強Pから強サイクロンのぼったくり択に注意。"
+  "punish":
+  - "スライディングガード後は距離にもよるが、基本は確定反撃あり。"
+  "effective_options":
+  - "9F詐欺が有効。"
+  - "OD無敵後に溜めワールするパターンであれば、その場受け身から前ジャンプでフルコンを狙える。"
+  - "強サイクロンをジャストパリィした場合はインパクト。"
+  - "強サイクロンの手前の技にもよるが割り込みが可能。"
+  - "強サイクロンから転がる派生は、ジャストパリィか5弱K暴れも択としてあり。"
+  - "イウサールは基本ガンガード。中段やすかし下段などを見て冷静に対処したい。"
+  - "起き攻めで垂直強Pを選択すると強ミキサーを潰しやすい傾向あり。"
+  "notes": |
+    SA1の発生は9F、SA3の発生は11F。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Super Rashid Kick (Level 1)"
+    "startup": "9F"
+    "on_hit": "Knockdown +1F (Knockdown +7...+18F)"
+    "on_block": "-53F"
+  - "level": "SA2"
+    "name": "Ysaar (Level 2)"
+    "startup": "11F"
+    "on_hit": "Knockdown +104..."
+    "on_block": "+33..."
+  - "level": "SA3"
+    "name": "Altair (Level 3)"
+    "startup": "11F"
+    "on_hit": "Knockdown +17F (Knockdown +18F)"
+    "on_block": "-75F"
+- "character": "A.K.I."
+  "status": "検証中"
+  "tags":
+  - "同キャラ"
+  - "起き攻め"
+  - "ジャストパリィ"
+  - "毒状態"
+  - "バーンアウト"
+  "overview": "起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。"
+  "watch_out":
+  - "毒状態の時はリターンを考慮し、前ジャンプは控えめにする。"
+  - "ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。"
+  - "弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。"
+  "punish":
+  - "5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。"
+  - "弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。"
+  "effective_options":
+  - "Dリバ詐欺が機能する組み合わせ"
+  - "10F詐欺の起き攻め"
+  - "紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。"
+  - "弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。"
+  - "OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。"
+  - "BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。"
+  "notes": |
+    SA1、SA3の発生はともに10F。
+    紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
+  "super_arts":
+  - "level": "SA1"
+    "name": "Deadly Implication (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +30F"
+    "on_block": "-46F"
+  - "level": "SA2"
+    "name": "Tainted Talons (Level 2)"
+    "startup": "7F"
+    "on_hit": "Knockdown +30F"
+    "on_block": "-19F"
+  - "level": "SA3"
+    "name": "Claws of Ya Zi (Level 3)"
+    "startup": "10F"
+    "on_hit": "Hard Knockdown +30F (Hard Knockdown +21F)"
+    "on_block": "-36F"
+- "character": "エド"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Psycho Storm (Level 1)"
+    "startup": "13F"
+    "on_hit": "Knockdown +33F"
+    "on_block": "-32F"
+  - "level": "SA2"
+    "name": "Psycho Cannon (Level 2)"
+    "startup": "8F"
+    "on_hit": "Free Juggle State TODO"
+    "on_block": "+65..."
+  - "level": "SA3"
+    "name": "Psycho Chamber (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +24F (Knockdown +24F)"
+    "on_block": "-49F"
+- "character": "豪鬼"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Messatsu Gohado (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +9..."
+    "on_block": "-41F"
+  - "level": "SA1"
+    "name": "Tenma Gozanku (Level 1)"
+    "startup": "14F"
+    "on_hit": "Knockdown +51..."
+    "on_block": "-26...+6F"
+  - "level": "SA2"
+    "name": "Empyrean's End (Level 2)"
+    "startup": "9F"
+    "on_hit": "Knockdown +29...+97F"
+    "on_block": "-35F"
+  - "level": "SA3"
+    "name": "Sip of Calamity (Level 3)"
+    "startup": "8F"
+    "on_hit": "Knockdown +18F (Knockdown +18F)"
+    "on_block": "-41F"
+- "character": "ベガ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Knee Press Nightmare (Level 1)"
+    "startup": "10F"
+    "on_hit": "Knockdown +11F"
+    "on_block": "-41F"
+  - "level": "SA2"
+    "name": "Psycho Punisher (Level 2)"
+    "startup": "24F"
+    "on_hit": "Knockdown +23F"
+    "on_block": "-34F"
+  - "level": "SA3"
+    "name": "Unlimited Psycho Crusher (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +15F"
+    "on_block": "-46F"
+- "character": "テリー"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Buster Wolf (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +22F"
+    "on_block": "-26F"
+  - "level": "SA2"
+    "name": "Power Geyser (Level 2)"
+    "startup": "13F"
+    "on_hit": "Knockdown +24F"
+    "on_block": "-27F"
+  - "level": "SA3"
+    "name": "Rising Fang (Level 3)"
+    "startup": "8F"
+    "on_hit": "Knockdown +22F (Knockdown +37F)"
+    "on_block": "-50F"
+- "character": "舞"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Kagerou no Mai (Level 1)"
+    "startup": "6F"
+    "on_hit": "Knockdown +26F (Knockdown +40F)"
+    "on_block": "-26F"
+  - "level": "SA2"
+    "name": "Chou Hissatsu Shinobi Bachi (Level 2)"
+    "startup": "7F"
+    "on_hit": "Knockdown +23F (Knockdown +38F)"
+    "on_block": "-24F"
+  - "level": "SA2"
+    "name": "Air Chou Hissatsu Shinobi Bachi (Level 2)"
+    "startup": "3F"
+    "on_hit": "Knockdown +11F (Knockdown +10F)"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Shiranui Ryuu: Enbu Ada Zakura (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +19F (Knockdown +20F)"
+    "on_block": "-33F"
+- "character": "エレナ"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Meteor Volley (Level 1)"
+    "startup": "9F"
+    "on_hit": "Limited Juggle Knockdown +42F"
+    "on_block": "-68F"
+  - "level": "SA2"
+    "name": "Revival Dance (Level 2)"
+    "startup": "12F"
+    "on_hit": "Knockdown +25F [Knockdown +1F]"
+    "on_block": "-47F"
+  - "level": "SA3"
+    "name": "Song of the Grasslands (Level 3)"
+    "startup": "8F"
+    "on_hit": "Knockdown +24F (Knockdown +29F)"
+    "on_block": "-54F"
+- "character": "サガット"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Tiger Cannon (Level 1)"
+    "startup": "7F"
+    "on_hit": "Knockdown +22...+34F"
+    "on_block": "-31...-19F"
+  - "level": "SA2"
+    "name": "Savage Tiger (Level 2)"
+    "startup": "10F"
+    "on_hit": "Knockdown +4F / Juggle +53F / Knockdown +7F / Knockdown +19F"
+    "on_block": "-58F"
+  - "level": "SA3"
+    "name": "Tiger Vanquisher (Level 3)"
+    "startup": "12F"
+    "on_hit": "Knockdown +15F"
+    "on_block": "-51F"
+- "character": "C.ヴァイパー"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Limit Decoupler (Level 1)"
+    "startup": "8F"
+    "on_hit": "Knockdown +7..."
+    "on_block": "-21F"
+  - "level": "SA2"
+    "name": "Mission Complete (Level 2)"
+    "startup": "7F"
+    "on_hit": "Knockdown +19F"
+    "on_block": "-29F"
+  - "level": "SA3"
+    "name": "Hard Luck Rejector (Level 3)"
+    "startup": "10F"
+    "on_hit": "Knockdown +23F"
+    "on_block": "-38F"
+- "character": "アレックス"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Raging Spear (Level 1)"
+    "startup": "9F"
+    "on_hit": "Knockdown +30..."
+    "on_block": "-38F"
+  - "level": "SA3"
+    "name": "The Final Prison (Level 3)"
+    "startup": "12F"
+    "on_hit": "Knockdown +18F (Knockdown +25F)"
+    "on_block": "TODO"
+- "character": "イングリッド"
+  "status": "TODO"
+  "tags": []
+  "overview": "TODO"
+  "watch_out": []
+  "punish": []
+  "effective_options": []
+  "notes": "TODO"
+  "super_arts":
+  - "level": "SA1"
+    "name": "Shining Sun (Level 1)"
+    "startup": "11F"
+    "on_hit": "Knockdown +12F | +17F | +20F"
+    "on_block": "-99F"
+  - "level": "SA2"
+    "name": "Order of the Sun (Level 2)"
+    "startup": "11F"
+    "on_hit": "TODO"
+    "on_block": "TODO"
+  - "level": "SA3"
+    "name": "Cosmic Ray (Level 3)"
+    "startup": "20F"
+    "on_hit": "Knockdown +30F (+30F)"
+    "on_block": "-45F"

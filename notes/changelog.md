@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-26 / matchup super arts
+
+### Added
+- `data/aki_matchups.yml` の各キャラ対に `super_arts` を追加
+- Ultimate Frame Data SF6 からSAごとの発生、ヒット後、ガード後を追加
+- `scripts/generate_matchup_viewer.py` と `scripts/generate_index_viewer.py` にスーパーアーツ表を追加
+
+### Updated
+- 未作成のキャラ対にもTODOカードを追加し、全30キャラ分のSA情報を参照できるように整理
+- `matchup_viewer.html` と `index.html` の検索対象にSA名とフレーム値を追加
+
+### Notes
+- UFD側で `**` や `--` の箇所は推測せず `TODO` として保持
+- 豪鬼の空中SA1、舞の空中SA2、ディージェイのSA2派生など、同じSAレベルの別行はそのまま複数行で保持
+
 ## 2026-06-14 / news page and navigation cleanup
 
 ### Added

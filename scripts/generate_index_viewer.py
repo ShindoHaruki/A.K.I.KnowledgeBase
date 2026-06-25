@@ -31,6 +31,23 @@ def badges(items):
     return "".join(f"<span>{h(item)}</span>" for item in items)
 
 
+def super_art_rows(items):
+    if not items:
+        return '<tr><td class="todo" colspan="5">TODO</td></tr>'
+    rows = []
+    for item in items:
+        rows.append(
+            "<tr>"
+            f"<th>{h(item.get('level', 'TODO'))}</th>"
+            f"<td>{h(item.get('name', 'TODO'))}</td>"
+            f"<td>{h(item.get('startup', 'TODO'))}</td>"
+            f"<td>{h(item.get('on_hit', 'TODO'))}</td>"
+            f"<td>{h(item.get('on_block', 'TODO'))}</td>"
+            "</tr>"
+        )
+    return "\n".join(rows)
+
+
 def youtube_embed_url(url):
     parsed = urlparse(url or "")
     host = parsed.netloc.lower().replace("www.", "")
@@ -212,6 +229,19 @@ def news_item(item):
 def matchup_card(character, matchup):
     matchup = matchup or {}
     tags = matchup.get("tags", ["未入力"])
+    super_arts = matchup.get("super_arts", [])
+    super_art_search = " ".join(
+        " ".join(
+            [
+                item.get("level", ""),
+                item.get("name", ""),
+                item.get("startup", ""),
+                item.get("on_hit", ""),
+                item.get("on_block", ""),
+            ]
+        )
+        for item in super_arts
+    )
     search = " ".join(
         [
             character,
@@ -220,6 +250,7 @@ def matchup_card(character, matchup):
             " ".join(matchup.get("watch_out", [])),
             " ".join(matchup.get("punish", [])),
             " ".join(matchup.get("effective_options", [])),
+            super_art_search,
             matchup.get("notes", ""),
         ]
     )
@@ -246,6 +277,23 @@ def matchup_card(character, matchup):
         <section class="block options">
           <h3>有効な選択肢</h3>
           <ul>{list_items(matchup.get("effective_options", []))}</ul>
+        </section>
+        <section class="block supers">
+          <h3>スーパーアーツ</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SA</th>
+                  <th>技名</th>
+                  <th>発生</th>
+                  <th>ヒット後</th>
+                  <th>ガード後</th>
+                </tr>
+              </thead>
+              <tbody>{super_art_rows(super_arts)}</tbody>
+            </table>
+          </div>
         </section>
         <section class="block notes">
           <h3>備考</h3>
@@ -688,6 +736,7 @@ def main():
     .options h3,
     .merits h3 {{ color: var(--good); }}
     .demerits h3 {{ color: var(--warn); }}
+    .supers h3 {{ color: #cfa9ff; }}
 
     .two-grid {{
       display: grid;
@@ -710,6 +759,43 @@ def main():
       color: #d0dae3;
       font-size: 14px;
       line-height: 1.45;
+    }}
+
+    .table-wrap {{
+      overflow-x: auto;
+    }}
+
+    table {{
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }}
+
+    th, td {{
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      color: #d0dae3;
+      text-align: left;
+      vertical-align: top;
+    }}
+
+    thead th {{
+      background: #17212c;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }}
+
+    tbody th {{
+      width: 54px;
+      color: #f2e7ff;
+      white-space: nowrap;
+    }}
+
+    tbody tr:last-child th,
+    tbody tr:last-child td {{
+      border-bottom: 0;
     }}
 
     .premise-grid {{

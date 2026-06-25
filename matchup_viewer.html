@@ -1,0 +1,2124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A.K.I. Knowledge Base - キャラ対</title>
+  <style>
+    :root {
+      --bg: #111820;
+      --panel: #18222d;
+      --soft: #202c38;
+      --ink: #eef4f8;
+      --muted: #9aa8b5;
+      --line: #31404f;
+      --accent: #59b7c8;
+      --danger: #dc5b5b;
+      --good: #4ec28b;
+      --warn: #e0a35b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px 20px;
+      background: rgba(17, 24, 32, 0.94);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner, main, .search-panel {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 21px;
+    }
+
+    .meta {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .page-tabs a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .page-tabs a.active {
+      border-color: var(--accent);
+      background: #173845;
+      color: #d7f7ff;
+    }
+
+    .search-panel {
+      padding: 14px 20px 0;
+    }
+
+    .search-box {
+      display: grid;
+      grid-template-columns: 1fr minmax(180px, 240px) auto;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input, select, button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #111820;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0 12px;
+    }
+
+    button {
+      padding: 0 12px;
+      background: var(--soft);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 22px 20px 42px;
+    }
+
+    .matchup-card {
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26);
+      overflow: hidden;
+    }
+
+    .matchup-card[hidden] {
+      display: none;
+    }
+
+    .card-head {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #202c38 0%, #18222d 100%);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+
+    .tags span {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #173845;
+      color: #d7f7ff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .block {
+      margin: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #141e28;
+      overflow: hidden;
+    }
+
+    .block h3 {
+      margin: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #202c38;
+      font-size: 14px;
+    }
+
+    .overview h3 { color: var(--accent); }
+    .danger h3 { color: var(--danger); }
+    .punish h3 { color: var(--warn); }
+    .options h3 { color: var(--good); }
+    .supers h3 { color: #cfa9ff; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 16px;
+    }
+
+    .grid .block {
+      margin: 0 0 14px;
+    }
+
+    p {
+      margin: 0;
+      padding: 12px 14px 14px;
+      color: #d0dae3;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      margin: 0;
+      padding: 11px 14px 12px 30px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      color: #d0dae3;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      color: #d0dae3;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    thead th {
+      background: #17212c;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    tbody th {
+      width: 54px;
+      color: #f2e7ff;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child th,
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .todo {
+      color: var(--muted);
+    }
+
+    .search-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      gap: 6px;
+      min-width: 118px;
+    }
+
+    #matchupCount {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .search-box,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      #matchupCount {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 14px 14px;
+      }
+
+      .search-panel {
+        padding: 12px 14px 0;
+      }
+
+      main {
+        padding: 18px 14px 34px;
+      }
+
+      .page-tabs a {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+
+      .block {
+        margin: 12px 12px;
+      }
+
+      .grid {
+        margin: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>A.K.I. Knowledge Base</h1>
+      <p class="meta">キャラ対 / TODO: matchup version / date</p>
+      <nav class="page-tabs" aria-label="ページ切替">
+        <a href="news_viewer.html">お知らせ</a>
+        <a href="situation_viewer.html">通常技組み合わせ</a>
+        <a class="active" href="matchup_viewer.html">キャラ対</a>
+      </nav>
+    </div>
+  </header>
+  <div class="search-panel">
+    <div class="search-box">
+      <div>
+        <label for="matchupSearch">検索</label>
+        <input id="matchupSearch" type="search" placeholder="例: ケン ラッシュ 確反">
+      </div>
+      <div>
+        <label for="characterFilter">キャラ</label>
+        <select id="characterFilter">
+          <option value="">すべて</option>
+          <option value="リュウ">リュウ</option>
+<option value="ルーク">ルーク</option>
+<option value="ジェイミー">ジェイミー</option>
+<option value="春麗">春麗</option>
+<option value="ガイル">ガイル</option>
+<option value="キンバリー">キンバリー</option>
+<option value="ジュリ">ジュリ</option>
+<option value="ケン">ケン</option>
+<option value="ブランカ">ブランカ</option>
+<option value="ダルシム">ダルシム</option>
+<option value="エドモンド本田">エドモンド本田</option>
+<option value="ディージェイ">ディージェイ</option>
+<option value="マノン">マノン</option>
+<option value="マリーザ">マリーザ</option>
+<option value="ＪＰ">ＪＰ</option>
+<option value="ザンギエフ">ザンギエフ</option>
+<option value="リリー">リリー</option>
+<option value="キャミィ">キャミィ</option>
+<option value="ラシード">ラシード</option>
+<option value="A.K.I.">A.K.I.</option>
+<option value="エド">エド</option>
+<option value="豪鬼">豪鬼</option>
+<option value="ベガ">ベガ</option>
+<option value="テリー">テリー</option>
+<option value="舞">舞</option>
+<option value="エレナ">エレナ</option>
+<option value="サガット">サガット</option>
+<option value="C.ヴァイパー">C.ヴァイパー</option>
+<option value="アレックス">アレックス</option>
+<option value="イングリッド">イングリッド</option>
+        </select>
+      </div>
+      <div class="search-side">
+        <span id="matchupCount"></span>
+        <button id="clearSearch" type="button">クリア</button>
+      </div>
+    </div>
+  </div>
+  <main>
+    
+    <article class="matchup-card" data-character="リュウ" data-search="リュウ 中距離 波動対策 波掌撃 足刀 SA対策 5中Kを軸に中距離を意識する。無理にDゲージを吐かないほうがよい。 弱技の刻みに対し、むやみに打ち返しを狙わない。 一部の技で締めた時、持続中段が行えるため警戒。  強波掌撃にジャストパリィトライ。自信があるならインパクトもあり。 集中済みの時に2中Kから強化波掌をする人も一定数いる。インパクトできたらおいしいかも。 リバサSA2の場合は垂直強Pを選択推奨。 足刀への対応として、バクステ、垂直、パリィなどを確認。 SA1 Shinku Hadoken (Level 1) 7F Knockdown +TODO -24F SA2 Shin Hashogeki (Level 2) 12F Knockdown +20F -20F SA3 Shin Shoryuken (Level 3) 5F Knockdown +14F (Knockdown +14F) -52F SA1の発生は7F、SA2の発生は12F、SA3の発生は5F。
+リュウ側は歩く速度がそこまでなので追うのが難しい。近距離になると波掌や大ゴスなど色々向き合う必要が出る。
+波動/波掌撃に対して生ラッシュを通す。A.K.I.側が比較的やれるが、相手の暴れやOD昇龍を誘う攻め方が大事。
+">
+      <div class="card-head">
+        <h2>リュウ</h2>
+        <div class="tags"><span>中距離</span><span>波動対策</span><span>波掌撃</span><span>足刀</span><span>SA対策</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>5中Kを軸に中距離を意識する。無理にDゲージを吐かないほうがよい。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>弱技の刻みに対し、むやみに打ち返しを狙わない。</li>
+<li>一部の技で締めた時、持続中段が行えるため警戒。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>強波掌撃にジャストパリィトライ。自信があるならインパクトもあり。</li>
+<li>集中済みの時に2中Kから強化波掌をする人も一定数いる。インパクトできたらおいしいかも。</li>
+<li>リバサSA2の場合は垂直強Pを選択推奨。</li>
+<li>足刀への対応として、バクステ、垂直、パリィなどを確認。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Shinku Hadoken (Level 1)</td><td>7F</td><td>Knockdown +TODO</td><td>-24F</td></tr>
+<tr><th>SA2</th><td>Shin Hashogeki (Level 2)</td><td>12F</td><td>Knockdown +20F</td><td>-20F</td></tr>
+<tr><th>SA3</th><td>Shin Shoryuken (Level 3)</td><td>5F</td><td>Knockdown +14F (Knockdown +14F)</td><td>-52F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1の発生は7F、SA2の発生は12F、SA3の発生は5F。
+リュウ側は歩く速度がそこまでなので追うのが難しい。近距離になると波掌や大ゴスなど色々向き合う必要が出る。
+波動/波掌撃に対して生ラッシュを通す。A.K.I.側が比較的やれるが、相手の暴れやOD昇龍を誘う攻め方が大事。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ルーク" data-search="ルーク 中距離 サンドブラスト ナックル サプレッサー 対空 5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。 サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。 ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。 ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。 垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。 遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。  サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。 強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。 前投げから前ステは0F状況。弱K暴れは有効。 前強Pターゲットコンボは4F技で割り込み可能。 SA1 Vulcan Blast (Level 1) 6F Knockdown +17F -29F SA2 Eraser (Level 2) 5F Knockdown +2F -29F SA3 Pale Rider (Level 3) 10F Knockdown +18F (Knockdown +18F) -42F SA1は発生6F、SA2は発生5F、SA3は発生10F。
+お互いの距離がある程度離れている場合は伏せ置き。
+猛毒牙による弾抜けの択を狙う。
+">
+      <div class="card-head">
+        <h2>ルーク</h2>
+        <div class="tags"><span>中距離</span><span>サンドブラスト</span><span>ナックル</span><span>サプレッサー</span><span>対空</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>5中Kや5強Pを中心とした中距離の戦いを心がける。ルークの強P間合い外で戦う意識。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>サプレッサーの存在があるため、むやみやたらな弱技の打ち返しは注意。</li>
+<li>ラッシュサプレッサー、ラッシュ引き強Kはこちら-1F。暴れなら5弱K、ジャストパリィトライもあるにはあるが、大抵キャンセルラッシュから来ることが多いので投げにダメージを取られる。</li>
+<li>ジャンプ強Pの判定が強いため、対空技のチョイスに要注意。</li>
+<li>垂直による釣り行動に対する回答は持っておかないと損をする可能性がある。</li>
+<li>遠目で弾を出すのに対し、ODサンドブラストで貫通させにくることがある。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>サンドブラストに対しジャストパリィ、ラッシュ弱K、2強K、2強Pなどの選択肢あり。</li>
+<li>強ナックルはSA3が溜まっていない場合インパクト、ジャストパリィトライ。理想は見てからバックジャンプしフルコン。</li>
+<li>前投げから前ステは0F状況。弱K暴れは有効。</li>
+<li>前強Pターゲットコンボは4F技で割り込み可能。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Vulcan Blast (Level 1)</td><td>6F</td><td>Knockdown +17F</td><td>-29F</td></tr>
+<tr><th>SA2</th><td>Eraser (Level 2)</td><td>5F</td><td>Knockdown +2F</td><td>-29F</td></tr>
+<tr><th>SA3</th><td>Pale Rider (Level 3)</td><td>10F</td><td>Knockdown +18F (Knockdown +18F)</td><td>-42F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1は発生6F、SA2は発生5F、SA3は発生10F。
+お互いの距離がある程度離れている場合は伏せ置き。
+猛毒牙による弾抜けの択を狙う。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ジェイミー" data-search="ジェイミー  TODO    SA1 Breakin&#x27; (Level 1) 10F Knockdown +7F (Knockdown -1F) -60F (-93F) SA2 The Devil&#x27;s Song (Level 2) 1F TODO TODO SA3 Getsuga Saiho (Level 3) 10F Knockdown +71F (Knockdown +18F) -27F TODO">
+      <div class="card-head">
+        <h2>ジェイミー</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Breakin&#x27; (Level 1)</td><td>10F</td><td>Knockdown +7F (Knockdown -1F)</td><td>-60F (-93F)</td></tr>
+<tr><th>SA2</th><td>The Devil&#x27;s Song (Level 2)</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Getsuga Saiho (Level 3)</td><td>10F</td><td>Knockdown +71F (Knockdown +18F)</td><td>-27F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="春麗" data-search="春麗  TODO    SA1 Kikosho (Level 1) 7F (7F) Knockdown +22F (TODO) -22F (TODO) SA2 Hoyoku-sen (Level 2) 12F Knockdown +29. Juggle State on hit (requires Jump Cancel). -35F SA3 Soten Ranka (Level 3) 8F Knockdown +6F (Knockdown +18F) -24F TODO">
+      <div class="card-head">
+        <h2>春麗</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Kikosho (Level 1)</td><td>7F (7F)</td><td>Knockdown +22F (TODO)</td><td>-22F (TODO)</td></tr>
+<tr><th>SA2</th><td>Hoyoku-sen (Level 2)</td><td>12F</td><td>Knockdown +29. Juggle State on hit (requires Jump Cancel).</td><td>-35F</td></tr>
+<tr><th>SA3</th><td>Soten Ranka (Level 3)</td><td>8F</td><td>Knockdown +6F (Knockdown +18F)</td><td>-24F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ガイル" data-search="ガイル  TODO    SA1 Sonic Hurricane (Level 1) 8F (7F) Knockdown +41F (Knockdown +70F) -26F (-2F) SA2 Solid Puncher (Level 2) 6F TODO TODO SA3 Crossfire Somersault (Level 3) 9F Knockdown +16F (Knockdown +16F) -59F TODO">
+      <div class="card-head">
+        <h2>ガイル</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Sonic Hurricane (Level 1)</td><td>8F (7F)</td><td>Knockdown +41F (Knockdown +70F)</td><td>-26F (-2F)</td></tr>
+<tr><th>SA2</th><td>Solid Puncher (Level 2)</td><td>6F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Crossfire Somersault (Level 3)</td><td>9F</td><td>Knockdown +16F (Knockdown +16F)</td><td>-59F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="キンバリー" data-search="キンバリー  TODO    SA1 Bushin Beats (Level 1) 10F Knockdown +22F (Knockdown +38F) -25F SA2 Bushin Scramble (Level 2) 13F Knockdown +22F -25F SA3 Bushin Ninjastar Cypher (Level 3) 8F Knockdown +16F (Knockdown +16F) -35F TODO">
+      <div class="card-head">
+        <h2>キンバリー</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Bushin Beats (Level 1)</td><td>10F</td><td>Knockdown +22F (Knockdown +38F)</td><td>-25F</td></tr>
+<tr><th>SA2</th><td>Bushin Scramble (Level 2)</td><td>13F</td><td>Knockdown +22F</td><td>-25F</td></tr>
+<tr><th>SA3</th><td>Bushin Ninjastar Cypher (Level 3)</td><td>8F</td><td>Knockdown +16F (Knockdown +16F)</td><td>-35F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ジュリ" data-search="ジュリ  TODO    SA1 Sakkai Fuhazan (Level 1) 7F Knockdown +TODO (Knockdown +TODO) -32F (-31F) SA2 Feng Shui Engine (Level 2) 7F (9F) TODO (+4F) TODO (-17F) SA3 Kaisen Dankai Raku (Level 3) 10F Knockdown +22F (Knockdown +20F) -31F TODO">
+      <div class="card-head">
+        <h2>ジュリ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Sakkai Fuhazan (Level 1)</td><td>7F</td><td>Knockdown +TODO (Knockdown +TODO)</td><td>-32F (-31F)</td></tr>
+<tr><th>SA2</th><td>Feng Shui Engine (Level 2)</td><td>7F (9F)</td><td>TODO (+4F)</td><td>TODO (-17F)</td></tr>
+<tr><th>SA3</th><td>Kaisen Dankai Raku (Level 3)</td><td>10F</td><td>Knockdown +22F (Knockdown +20F)</td><td>-31F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ケン" data-search="ケン サンプル ラッシュ対策 TODO: ケン戦の全体方針を書く。 TODO: 龍尾脚 TODO: ラッシュからの投げ/打撃 TODO: 確反ポイント TODO: 有効な通常技・組み合わせ SA1 Dragonlash Flame (Level 1) 7F Knockdown +9F -24F SA2 Shippu Jinrai-kyaku (Level 2) 6F Knockdown +36F -5F SA3 Shinryu Reppa (Level 3) 7F Knockdown +15F (Knockdown +21F) -40F 検索テスト用サンプル。
+">
+      <div class="card-head">
+        <h2>ケン</h2>
+        <div class="tags"><span>サンプル</span><span>ラッシュ対策</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO: ケン戦の全体方針を書く。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>TODO: 龍尾脚</li>
+<li>TODO: ラッシュからの投げ/打撃</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>TODO: 確反ポイント</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>TODO: 有効な通常技・組み合わせ</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Dragonlash Flame (Level 1)</td><td>7F</td><td>Knockdown +9F</td><td>-24F</td></tr>
+<tr><th>SA2</th><td>Shippu Jinrai-kyaku (Level 2)</td><td>6F</td><td>Knockdown +36F</td><td>-5F</td></tr>
+<tr><th>SA3</th><td>Shinryu Reppa (Level 3)</td><td>7F</td><td>Knockdown +15F (Knockdown +21F)</td><td>-40F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>検索テスト用サンプル。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ブランカ" data-search="ブランカ  TODO    SA1 Shout of Earth (Level 1) 8F Knockdown +15F -29F SA2 Lightning Beast (Level 2) 1F TODO TODO SA3 Ground Shave Cannonball (Level 3) 10F Knockdown +50F (Knockdown +14F) -46F TODO">
+      <div class="card-head">
+        <h2>ブランカ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Shout of Earth (Level 1)</td><td>8F</td><td>Knockdown +15F</td><td>-29F</td></tr>
+<tr><th>SA2</th><td>Lightning Beast (Level 2)</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Ground Shave Cannonball (Level 3)</td><td>10F</td><td>Knockdown +50F (Knockdown +14F)</td><td>-46F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ダルシム" data-search="ダルシム  TODO    SA1 Yoga Inferno (Level 1) 10F (Knockdown +24F) (Knockdown +24F) (Knockdown +27F) (-15F) (-15F) (-22F) SA2 Yoga Sunburst (Level 2) 7F (7F+???) TODO TODO SA3 Merciless Yoga (Level 3) 10F Knockdown +19F (Knockdown +19F) -62F TODO">
+      <div class="card-head">
+        <h2>ダルシム</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Yoga Inferno (Level 1)</td><td>10F</td><td>(Knockdown +24F) (Knockdown +24F) (Knockdown +27F)</td><td>(-15F) (-15F) (-22F)</td></tr>
+<tr><th>SA2</th><td>Yoga Sunburst (Level 2)</td><td>7F (7F+???)</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Merciless Yoga (Level 3)</td><td>10F</td><td>Knockdown +19F (Knockdown +19F)</td><td>-62F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エドモンド本田" data-search="エドモンド本田  TODO    SA1 Show of Force (Level 1) 7F Knockdown +13... -33F SA2 Ultimate Killer Head Ram (Level 2) 12F Knockdown +13F -27F SA3 The Final Bout (Level 3) 9F Knockdown +11F (Knockdown +34F) -34F TODO">
+      <div class="card-head">
+        <h2>エドモンド本田</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Show of Force (Level 1)</td><td>7F</td><td>Knockdown +13...</td><td>-33F</td></tr>
+<tr><th>SA2</th><td>Ultimate Killer Head Ram (Level 2)</td><td>12F</td><td>Knockdown +13F</td><td>-27F</td></tr>
+<tr><th>SA3</th><td>The Final Bout (Level 3)</td><td>9F</td><td>Knockdown +11F (Knockdown +34F)</td><td>-34F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ディージェイ" data-search="ディージェイ  TODO    SA1 The Greatest Sobat (Level 1) 7F Knockdown +32F -12F SA2 Lowkey Sunrise Festival (Level 2) 12F +6F (...Knockdown +29F) -29F SA2 Marvelous Sunrise Festival (Level 2) 12F +6F (TODO) -29F SA2 Headliner Sunrise Festival (Level 2) 12F +6F (TODO) -29F SA3 Weekend Pleasure (Level 3) 9F Knockdown +26F (Knockdown +22F) -28F TODO">
+      <div class="card-head">
+        <h2>ディージェイ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>The Greatest Sobat (Level 1)</td><td>7F</td><td>Knockdown +32F</td><td>-12F</td></tr>
+<tr><th>SA2</th><td>Lowkey Sunrise Festival (Level 2)</td><td>12F</td><td>+6F (...Knockdown +29F)</td><td>-29F</td></tr>
+<tr><th>SA2</th><td>Marvelous Sunrise Festival (Level 2)</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
+<tr><th>SA2</th><td>Headliner Sunrise Festival (Level 2)</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
+<tr><th>SA3</th><td>Weekend Pleasure (Level 3)</td><td>9F</td><td>Knockdown +26F (Knockdown +22F)</td><td>-28F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="マノン" data-search="マノン 毒沼 10F詐欺 Dリバ デガジェ SA対策 毒沼も活用してマノンに攻めさせる。飛びだけは要注意。 リーチの長い技が多いため、ちょこちょこ被弾すると最終的にダメージレースで負けやすい。 デガジェ系はガードできたら基本的には5強Kで開始。 SA2が溜まるまでは10F詐欺が有効。 SA2をガードできたら、ガード＞ガード＞バクステ＞バクステ＞沼設置＞5強K。 中PラッシュにDリバを見せる。間に合わなくても意思表示としてあり。 SA1 Arabesque (Level 1) 10F Knockdown +7... -49F SA2 Étoile (Level 2) 7F Knockdown +32F -61F SA3 Pas de Deux (Level 3) 7F (6F+1F) Knockdown +16F -65F SA1の発生は10F、SA2とSA3の発生は7F。SA3は投げ属性。
+">
+      <div class="card-head">
+        <h2>マノン</h2>
+        <div class="tags"><span>毒沼</span><span>10F詐欺</span><span>Dリバ</span><span>デガジェ</span><span>SA対策</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>毒沼も活用してマノンに攻めさせる。飛びだけは要注意。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>リーチの長い技が多いため、ちょこちょこ被弾すると最終的にダメージレースで負けやすい。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>デガジェ系はガードできたら基本的には5強Kで開始。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>SA2が溜まるまでは10F詐欺が有効。</li>
+<li>SA2をガードできたら、ガード＞ガード＞バクステ＞バクステ＞沼設置＞5強K。</li>
+<li>中PラッシュにDリバを見せる。間に合わなくても意思表示としてあり。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Arabesque (Level 1)</td><td>10F</td><td>Knockdown +7...</td><td>-49F</td></tr>
+<tr><th>SA2</th><td>Étoile (Level 2)</td><td>7F</td><td>Knockdown +32F</td><td>-61F</td></tr>
+<tr><th>SA3</th><td>Pas de Deux (Level 3)</td><td>7F (6F+1F)</td><td>Knockdown +16F</td><td>-65F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1の発生は10F、SA2とSA3の発生は7F。SA3は投げ属性。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="マリーザ" data-search="マリーザ グラディウス ファランクス スクトゥム 9F詐欺 Dリバ 待ち気味に戦い、置き技を空振らないことを意識する。たまに垂直を見せ、差し込みは2強Kを軸にして場合によってはSAへつなぐ。溜め5強P、ファランクス、グラディウスにはジャストパリィを積極的に狙う。起き攻めは投げの割合を増やしてもよい。相手のキャンセルラッシュにはDリバが生きやすく、マリーザ側の確定反撃もそこまで大きくない。 Dゲージ削りや有利を無理やり継続してくる連携が多いため、中途半端な打ち返しは負け筋になりやすい。 マリーザの5中Pターゲットコンボ後にラッシュせず攻撃をやめた場合、こちらが+8F。 マリーザの5中Pターゲットコンボガード後は+8F。 9F詐欺が有効。 グラディウスの空振りはラッシュで詰める。できたら強いが、無理に差し返しを狙わない。 マリーザがよくやるグラディウス対空には着地インパクトが入る。 溜めグラディウス対空のケースが発生したら、着地投げか着地SAも視野。 スクトゥムに対してはインパクトか投げ。長押しには負けるので読み合い。 マリーザの5中PターゲットコンボからラッシュはDリバ。 マリーザのラッシュ2中Kガード時は後ろ歩き推奨。2弱K＞2弱Pが当たらない。 マリーザのラッシュ5強Pガード後はバックジャンプがおすすめ。-1Fだけなので読み合い。 被画面端であれば前ジャンプ＞早出しJ強P。ジャンプ中Pターゲットコンボ狩りになるケースあり。 詐欺飛びを仕掛けるのであれば、弱技から入るとODスクトゥムの反撃をもらわない。 SA1 Javelin of Marisa (Level 1) 19F (42F) (6F) Knockdown +14F (Knockdown +35F) (Knockdown +46F) -43F (-43F) (TODO) SA2 Meteorite (Level 2) 9F (34F) Knockdown +17F TODO (-44F) SA3 Goddess of the Hunt (Level 3) 13F Knockdown +14F (Knockdown +14F) -39F SA1の発生は9F、SA3の発生は13F。
+">
+      <div class="card-head">
+        <h2>マリーザ</h2>
+        <div class="tags"><span>グラディウス</span><span>ファランクス</span><span>スクトゥム</span><span>9F詐欺</span><span>Dリバ</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>待ち気味に戦い、置き技を空振らないことを意識する。たまに垂直を見せ、差し込みは2強Kを軸にして場合によってはSAへつなぐ。溜め5強P、ファランクス、グラディウスにはジャストパリィを積極的に狙う。起き攻めは投げの割合を増やしてもよい。相手のキャンセルラッシュにはDリバが生きやすく、マリーザ側の確定反撃もそこまで大きくない。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>Dゲージ削りや有利を無理やり継続してくる連携が多いため、中途半端な打ち返しは負け筋になりやすい。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>マリーザの5中Pターゲットコンボ後にラッシュせず攻撃をやめた場合、こちらが+8F。</li>
+<li>マリーザの5中Pターゲットコンボガード後は+8F。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>9F詐欺が有効。</li>
+<li>グラディウスの空振りはラッシュで詰める。できたら強いが、無理に差し返しを狙わない。</li>
+<li>マリーザがよくやるグラディウス対空には着地インパクトが入る。</li>
+<li>溜めグラディウス対空のケースが発生したら、着地投げか着地SAも視野。</li>
+<li>スクトゥムに対してはインパクトか投げ。長押しには負けるので読み合い。</li>
+<li>マリーザの5中PターゲットコンボからラッシュはDリバ。</li>
+<li>マリーザのラッシュ2中Kガード時は後ろ歩き推奨。2弱K＞2弱Pが当たらない。</li>
+<li>マリーザのラッシュ5強Pガード後はバックジャンプがおすすめ。-1Fだけなので読み合い。</li>
+<li>被画面端であれば前ジャンプ＞早出しJ強P。ジャンプ中Pターゲットコンボ狩りになるケースあり。</li>
+<li>詐欺飛びを仕掛けるのであれば、弱技から入るとODスクトゥムの反撃をもらわない。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Javelin of Marisa (Level 1)</td><td>19F (42F) (6F)</td><td>Knockdown +14F (Knockdown +35F) (Knockdown +46F)</td><td>-43F (-43F) (TODO)</td></tr>
+<tr><th>SA2</th><td>Meteorite (Level 2)</td><td>9F (34F)</td><td>Knockdown +17F</td><td>TODO (-44F)</td></tr>
+<tr><th>SA3</th><td>Goddess of the Hunt (Level 3)</td><td>13F</td><td>Knockdown +14F (Knockdown +14F)</td><td>-39F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1の発生は9F、SA3の発生は13F。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ＪＰ" data-search="ＪＰ  TODO    SA1 Chornobog (Level 1) 7F, 15F Knockdown +22...+32F -33...-23F SA2 Lovushka (Level 2) 13F TODO TODO SA3 Interdiction (Level 3) 18F Knockdown +23F (Knockdown +23F) -50F TODO">
+      <div class="card-head">
+        <h2>ＪＰ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Chornobog (Level 1)</td><td>7F, 15F</td><td>Knockdown +22...+32F</td><td>-33...-23F</td></tr>
+<tr><th>SA2</th><td>Lovushka (Level 2)</td><td>13F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Interdiction (Level 3)</td><td>18F</td><td>Knockdown +23F (Knockdown +23F)</td><td>-50F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ザンギエフ" data-search="ザンギエフ  TODO    SA1 Aerial Russian Slam (Level 1) 11F Knockdown +29F TODO SA2 Cyclone Lariat (Level 2) 18F Knockdown +5F / Knockdown +87F / TODO / TODO -35F SA3 Bolshoi Storm Buster (Level 3) 6F (6F+0F) Knockdown +26F TODO TODO">
+      <div class="card-head">
+        <h2>ザンギエフ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Aerial Russian Slam (Level 1)</td><td>11F</td><td>Knockdown +29F</td><td>TODO</td></tr>
+<tr><th>SA2</th><td>Cyclone Lariat (Level 2)</td><td>18F</td><td>Knockdown +5F / Knockdown +87F / TODO / TODO</td><td>-35F</td></tr>
+<tr><th>SA3</th><td>Bolshoi Storm Buster (Level 3)</td><td>6F (6F+0F)</td><td>Knockdown +26F</td><td>TODO</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="リリー" data-search="リリー 風 スパイア 起き攻め Dリバ 差し返し 風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。 風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。 風利用ODスパイアガード時は早めのDリバで拒否推奨。 風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。 風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。 SA3が溜まるまでは9F詐欺の起き攻めが有効。 2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。 弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。 風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。 SA1 Breezing Hawk (Level 1) 10F Knockdown +27F -36F SA2 Thunderbird (Level 2) 9F (9F) Knockdown +42F (Knockdown +43F) -60F (-59F) SA3 Raging Typhoon (Level 3) 7F (5F+2F) Knockdown +4F TODO SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
+風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
+リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
+理想は風を溜められる前に体力リードを作りたい。
+">
+      <div class="card-head">
+        <h2>リリー</h2>
+        <div class="tags"><span>風</span><span>スパイア</span><span>起き攻め</span><span>Dリバ</span><span>差し返し</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>風を溜めさせない意識を持ち、SAゲージ状況と風ストックに応じて起き攻め・Dリバ・差し返しを使い分ける。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>風利用通常スパイアガード時は+1F。読み合いとしてジャストパリィ、5弱K暴れ、早投げなどの選択もOK。</li>
+<li>風利用ODスパイアガード時は早めのDリバで拒否推奨。</li>
+<li>風が1つでもある場合、こちらの詐欺飛びに対しリリーの通常昇竜が勝つので注意。空かし飛びは大丈夫。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>風無しスパイアが食い込んで当たった場合に確定反撃があるが、当たり方でフレームが変わる。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>SA3が溜まるまでは9F詐欺の起き攻めが有効。</li>
+<li>2強Pから風溜め系統にSAが入るケースあり。トレモで感覚練習したのち投入すべき。</li>
+<li>弱技3発から弱スパイアの場合はバックジャンプでフルコン可能。</li>
+<li>風利用ODスパイアはDリバで拒否。打ち出しを予測できる場合は蛇連咬で対応が可能。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Breezing Hawk (Level 1)</td><td>10F</td><td>Knockdown +27F</td><td>-36F</td></tr>
+<tr><th>SA2</th><td>Thunderbird (Level 2)</td><td>9F (9F)</td><td>Knockdown +42F (Knockdown +43F)</td><td>-60F (-59F)</td></tr>
+<tr><th>SA3</th><td>Raging Typhoon (Level 3)</td><td>7F (5F+2F)</td><td>Knockdown +4F</td><td>TODO</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1は発生10F、SA2は発生9F、SA3は発生7F（投げ属性）。
+風溜めさせない意識は大事。弱蛇頭鞭 or ラッシュは場所に応じて使用。弱蛇頭鞭が届く距離をキープする。
+リリー側の2強P or 6強Pに対する差し返しは、近ければ2強Pや2強Kでトライ可能。相手の技次第では2中Pでもいけるかも。
+理想は風を溜められる前に体力リードを作りたい。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="キャミィ" data-search="キャミィ  TODO    SA1 Spin Drive Smasher (Level 1) 9F Knockdown +10F -24F SA2 Killer Bee Spin (Level 2) 13F Knockdown +12F -24... SA3 Delta Red Assault (Level 3) 9F Knockdown +17F (Knockdown +22F) -33F TODO">
+      <div class="card-head">
+        <h2>キャミィ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Spin Drive Smasher (Level 1)</td><td>9F</td><td>Knockdown +10F</td><td>-24F</td></tr>
+<tr><th>SA2</th><td>Killer Bee Spin (Level 2)</td><td>13F</td><td>Knockdown +12F</td><td>-24...</td></tr>
+<tr><th>SA3</th><td>Delta Red Assault (Level 3)</td><td>9F</td><td>Knockdown +17F (Knockdown +22F)</td><td>-33F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ラシード" data-search="ラシード ワール サイクロン イウサール 9F詐欺 弾抜け 相手の出方次第では前ジャンプ、生ラッシュ多めでも可。溜めワールなどに対する弾抜け猛毒牙を意識させるため、伏せ置きなども選択肢に入れる。終盤に差し掛かるにつれて弾抜けのスライディングを警戒した立ち回りを意識する。 中Pからサイクロン系統などの散らし択に注意。 強Pから強サイクロンのぼったくり択に注意。 スライディングガード後は距離にもよるが、基本は確定反撃あり。 9F詐欺が有効。 OD無敵後に溜めワールするパターンであれば、その場受け身から前ジャンプでフルコンを狙える。 強サイクロンをジャストパリィした場合はインパクト。 強サイクロンの手前の技にもよるが割り込みが可能。 強サイクロンから転がる派生は、ジャストパリィか5弱K暴れも択としてあり。 イウサールは基本ガンガード。中段やすかし下段などを見て冷静に対処したい。 起き攻めで垂直強Pを選択すると強ミキサーを潰しやすい傾向あり。 SA1 Super Rashid Kick (Level 1) 9F Knockdown +1F (Knockdown +7...+18F) -53F SA2 Ysaar (Level 2) 11F Knockdown +104... +33... SA3 Altair (Level 3) 11F Knockdown +17F (Knockdown +18F) -75F SA1の発生は9F、SA3の発生は11F。
+">
+      <div class="card-head">
+        <h2>ラシード</h2>
+        <div class="tags"><span>ワール</span><span>サイクロン</span><span>イウサール</span><span>9F詐欺</span><span>弾抜け</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>相手の出方次第では前ジャンプ、生ラッシュ多めでも可。溜めワールなどに対する弾抜け猛毒牙を意識させるため、伏せ置きなども選択肢に入れる。終盤に差し掛かるにつれて弾抜けのスライディングを警戒した立ち回りを意識する。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>中Pからサイクロン系統などの散らし択に注意。</li>
+<li>強Pから強サイクロンのぼったくり択に注意。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>スライディングガード後は距離にもよるが、基本は確定反撃あり。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>9F詐欺が有効。</li>
+<li>OD無敵後に溜めワールするパターンであれば、その場受け身から前ジャンプでフルコンを狙える。</li>
+<li>強サイクロンをジャストパリィした場合はインパクト。</li>
+<li>強サイクロンの手前の技にもよるが割り込みが可能。</li>
+<li>強サイクロンから転がる派生は、ジャストパリィか5弱K暴れも択としてあり。</li>
+<li>イウサールは基本ガンガード。中段やすかし下段などを見て冷静に対処したい。</li>
+<li>起き攻めで垂直強Pを選択すると強ミキサーを潰しやすい傾向あり。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Super Rashid Kick (Level 1)</td><td>9F</td><td>Knockdown +1F (Knockdown +7...+18F)</td><td>-53F</td></tr>
+<tr><th>SA2</th><td>Ysaar (Level 2)</td><td>11F</td><td>Knockdown +104...</td><td>+33...</td></tr>
+<tr><th>SA3</th><td>Altair (Level 3)</td><td>11F</td><td>Knockdown +17F (Knockdown +18F)</td><td>-75F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1の発生は9F、SA3の発生は11F。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="A.K.I." data-search="A.K.I. 同キャラ 起き攻め ジャストパリィ 毒状態 バーンアウト 起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。 毒状態の時はリターンを考慮し、前ジャンプは控えめにする。 ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。 弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。 5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。 弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。 Dリバ詐欺が機能する組み合わせ 10F詐欺の起き攻め 紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。 弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。 OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。 BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。 SA1 Deadly Implication (Level 1) 10F Knockdown +30F -46F SA2 Tainted Talons (Level 2) 7F Knockdown +30F -19F SA3 Claws of Ya Zi (Level 3) 10F Hard Knockdown +30F (Hard Knockdown +21F) -36F SA1、SA3の発生はともに10F。
+紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
+">
+      <div class="card-head">
+        <h2>A.K.I.</h2>
+        <div class="tags"><span>同キャラ</span><span>起き攻め</span><span>ジャストパリィ</span><span>毒状態</span><span>バーンアウト</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>起き攻め、ジャストパリィ、Dリバ詐欺、近距離での確反を軸にリターン差を管理する。</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li>毒状態の時はリターンを考慮し、前ジャンプは控えめにする。</li>
+<li>ラッシュ中Pガード時、持続ではない当たり方を判断後に限り+1Fの読み合い。相手が投げやシミーをするなら弱K暴れ択を見せることも大事。</li>
+<li>弱PTCの入れ込みが頻繁であれば2段目ジャストパリィを狙う。</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li>5強P、6強Pが近距離で食い込んだら5弱Kパニカン可能。</li>
+<li>弱蛇頭鞭、紫煙砲を近距離で受けた場合は距離によって-8Fを生かした確定反撃が可能。</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li>Dリバ詐欺が機能する組み合わせ</li>
+<li>10F詐欺の起き攻め</li>
+<li>紫煙砲に対してジャストパリィ。ジャストパリィ後に相手の行動へ何を意識するかはTODO整理。</li>
+<li>弱蛇頭鞭入れ込み連携に対してインパクト割り込み。ジャストパリィでも可。</li>
+<li>OD凶襲突にジャストパリィをトライ。通常パリィになったらDリバ。SA3がある場合はリバタイミングの読み合いが発生するため注意。</li>
+<li>BO中の中Pから弱凶襲突は屈中P空振りで裏回り可能（+16F）。</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Deadly Implication (Level 1)</td><td>10F</td><td>Knockdown +30F</td><td>-46F</td></tr>
+<tr><th>SA2</th><td>Tainted Talons (Level 2)</td><td>7F</td><td>Knockdown +30F</td><td>-19F</td></tr>
+<tr><th>SA3</th><td>Claws of Ya Zi (Level 3)</td><td>10F</td><td>Hard Knockdown +30F (Hard Knockdown +21F)</td><td>-36F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>SA1、SA3の発生はともに10F。
+紫煙砲へのジャストパリィ後の具体的な意識配分はTODO。
+</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エド" data-search="エド  TODO    SA1 Psycho Storm (Level 1) 13F Knockdown +33F -32F SA2 Psycho Cannon (Level 2) 8F Free Juggle State TODO +65... SA3 Psycho Chamber (Level 3) 10F Knockdown +24F (Knockdown +24F) -49F TODO">
+      <div class="card-head">
+        <h2>エド</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Psycho Storm (Level 1)</td><td>13F</td><td>Knockdown +33F</td><td>-32F</td></tr>
+<tr><th>SA2</th><td>Psycho Cannon (Level 2)</td><td>8F</td><td>Free Juggle State TODO</td><td>+65...</td></tr>
+<tr><th>SA3</th><td>Psycho Chamber (Level 3)</td><td>10F</td><td>Knockdown +24F (Knockdown +24F)</td><td>-49F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="豪鬼" data-search="豪鬼  TODO    SA1 Messatsu Gohado (Level 1) 10F Knockdown +9... -41F SA1 Tenma Gozanku (Level 1) 14F Knockdown +51... -26...+6F SA2 Empyrean&#x27;s End (Level 2) 9F Knockdown +29...+97F -35F SA3 Sip of Calamity (Level 3) 8F Knockdown +18F (Knockdown +18F) -41F TODO">
+      <div class="card-head">
+        <h2>豪鬼</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Messatsu Gohado (Level 1)</td><td>10F</td><td>Knockdown +9...</td><td>-41F</td></tr>
+<tr><th>SA1</th><td>Tenma Gozanku (Level 1)</td><td>14F</td><td>Knockdown +51...</td><td>-26...+6F</td></tr>
+<tr><th>SA2</th><td>Empyrean&#x27;s End (Level 2)</td><td>9F</td><td>Knockdown +29...+97F</td><td>-35F</td></tr>
+<tr><th>SA3</th><td>Sip of Calamity (Level 3)</td><td>8F</td><td>Knockdown +18F (Knockdown +18F)</td><td>-41F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="ベガ" data-search="ベガ  TODO    SA1 Knee Press Nightmare (Level 1) 10F Knockdown +11F -41F SA2 Psycho Punisher (Level 2) 24F Knockdown +23F -34F SA3 Unlimited Psycho Crusher (Level 3) 10F Knockdown +15F -46F TODO">
+      <div class="card-head">
+        <h2>ベガ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Knee Press Nightmare (Level 1)</td><td>10F</td><td>Knockdown +11F</td><td>-41F</td></tr>
+<tr><th>SA2</th><td>Psycho Punisher (Level 2)</td><td>24F</td><td>Knockdown +23F</td><td>-34F</td></tr>
+<tr><th>SA3</th><td>Unlimited Psycho Crusher (Level 3)</td><td>10F</td><td>Knockdown +15F</td><td>-46F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="テリー" data-search="テリー  TODO    SA1 Buster Wolf (Level 1) 7F Knockdown +22F -26F SA2 Power Geyser (Level 2) 13F Knockdown +24F -27F SA3 Rising Fang (Level 3) 8F Knockdown +22F (Knockdown +37F) -50F TODO">
+      <div class="card-head">
+        <h2>テリー</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Buster Wolf (Level 1)</td><td>7F</td><td>Knockdown +22F</td><td>-26F</td></tr>
+<tr><th>SA2</th><td>Power Geyser (Level 2)</td><td>13F</td><td>Knockdown +24F</td><td>-27F</td></tr>
+<tr><th>SA3</th><td>Rising Fang (Level 3)</td><td>8F</td><td>Knockdown +22F (Knockdown +37F)</td><td>-50F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="舞" data-search="舞  TODO    SA1 Kagerou no Mai (Level 1) 6F Knockdown +26F (Knockdown +40F) -26F SA2 Chou Hissatsu Shinobi Bachi (Level 2) 7F Knockdown +23F (Knockdown +38F) -24F SA2 Air Chou Hissatsu Shinobi Bachi (Level 2) 3F Knockdown +11F (Knockdown +10F) TODO SA3 Shiranui Ryuu: Enbu Ada Zakura (Level 3) 10F Knockdown +19F (Knockdown +20F) -33F TODO">
+      <div class="card-head">
+        <h2>舞</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Kagerou no Mai (Level 1)</td><td>6F</td><td>Knockdown +26F (Knockdown +40F)</td><td>-26F</td></tr>
+<tr><th>SA2</th><td>Chou Hissatsu Shinobi Bachi (Level 2)</td><td>7F</td><td>Knockdown +23F (Knockdown +38F)</td><td>-24F</td></tr>
+<tr><th>SA2</th><td>Air Chou Hissatsu Shinobi Bachi (Level 2)</td><td>3F</td><td>Knockdown +11F (Knockdown +10F)</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Shiranui Ryuu: Enbu Ada Zakura (Level 3)</td><td>10F</td><td>Knockdown +19F (Knockdown +20F)</td><td>-33F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="エレナ" data-search="エレナ  TODO    SA1 Meteor Volley (Level 1) 9F Limited Juggle Knockdown +42F -68F SA2 Revival Dance (Level 2) 12F Knockdown +25F [Knockdown +1F] -47F SA3 Song of the Grasslands (Level 3) 8F Knockdown +24F (Knockdown +29F) -54F TODO">
+      <div class="card-head">
+        <h2>エレナ</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Meteor Volley (Level 1)</td><td>9F</td><td>Limited Juggle Knockdown +42F</td><td>-68F</td></tr>
+<tr><th>SA2</th><td>Revival Dance (Level 2)</td><td>12F</td><td>Knockdown +25F [Knockdown +1F]</td><td>-47F</td></tr>
+<tr><th>SA3</th><td>Song of the Grasslands (Level 3)</td><td>8F</td><td>Knockdown +24F (Knockdown +29F)</td><td>-54F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="サガット" data-search="サガット  TODO    SA1 Tiger Cannon (Level 1) 7F Knockdown +22...+34F -31...-19F SA2 Savage Tiger (Level 2) 10F Knockdown +4F / Juggle +53F / Knockdown +7F / Knockdown +19F -58F SA3 Tiger Vanquisher (Level 3) 12F Knockdown +15F -51F TODO">
+      <div class="card-head">
+        <h2>サガット</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Tiger Cannon (Level 1)</td><td>7F</td><td>Knockdown +22...+34F</td><td>-31...-19F</td></tr>
+<tr><th>SA2</th><td>Savage Tiger (Level 2)</td><td>10F</td><td>Knockdown +4F / Juggle +53F / Knockdown +7F / Knockdown +19F</td><td>-58F</td></tr>
+<tr><th>SA3</th><td>Tiger Vanquisher (Level 3)</td><td>12F</td><td>Knockdown +15F</td><td>-51F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="C.ヴァイパー" data-search="C.ヴァイパー  TODO    SA1 Limit Decoupler (Level 1) 8F Knockdown +7... -21F SA2 Mission Complete (Level 2) 7F Knockdown +19F -29F SA3 Hard Luck Rejector (Level 3) 10F Knockdown +23F -38F TODO">
+      <div class="card-head">
+        <h2>C.ヴァイパー</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Limit Decoupler (Level 1)</td><td>8F</td><td>Knockdown +7...</td><td>-21F</td></tr>
+<tr><th>SA2</th><td>Mission Complete (Level 2)</td><td>7F</td><td>Knockdown +19F</td><td>-29F</td></tr>
+<tr><th>SA3</th><td>Hard Luck Rejector (Level 3)</td><td>10F</td><td>Knockdown +23F</td><td>-38F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="アレックス" data-search="アレックス  TODO    SA1 Raging Spear (Level 1) 9F Knockdown +30... -38F SA3 The Final Prison (Level 3) 12F Knockdown +18F (Knockdown +25F) TODO TODO">
+      <div class="card-head">
+        <h2>アレックス</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Raging Spear (Level 1)</td><td>9F</td><td>Knockdown +30...</td><td>-38F</td></tr>
+<tr><th>SA3</th><td>The Final Prison (Level 3)</td><td>12F</td><td>Knockdown +18F (Knockdown +25F)</td><td>TODO</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+
+    <article class="matchup-card" data-character="イングリッド" data-search="イングリッド  TODO    SA1 Shining Sun (Level 1) 11F Knockdown +12F | +17F | +20F -99F SA2 Order of the Sun (Level 2) 11F TODO TODO SA3 Cosmic Ray (Level 3) 20F Knockdown +30F (+30F) -45F TODO">
+      <div class="card-head">
+        <h2>イングリッド</h2>
+        <div class="tags"><span class="todo">TODO</span></div>
+      </div>
+
+      <section class="block overview">
+        <h3>方針</h3>
+        <p>TODO</p>
+      </section>
+
+      <div class="grid">
+        <section class="block danger">
+          <h3>注意する行動</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+        <section class="block punish">
+          <h3>確反・咎め</h3>
+          <ul><li class="todo">TODO</li></ul>
+        </section>
+      </div>
+
+      <section class="block options">
+        <h3>有効な選択肢</h3>
+        <ul><li class="todo">TODO</li></ul>
+      </section>
+
+      <section class="block supers">
+        <h3>スーパーアーツ</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SA</th>
+                <th>技名</th>
+                <th>発生</th>
+                <th>ヒット後</th>
+                <th>ガード後</th>
+              </tr>
+            </thead>
+            <tbody><tr><th>SA1</th><td>Shining Sun (Level 1)</td><td>11F</td><td>Knockdown +12F | +17F | +20F</td><td>-99F</td></tr>
+<tr><th>SA2</th><td>Order of the Sun (Level 2)</td><td>11F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th>SA3</th><td>Cosmic Ray (Level 3)</td><td>20F</td><td>Knockdown +30F (+30F)</td><td>-45F</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block notes">
+        <h3>備考</h3>
+        <p>TODO</p>
+      </section>
+    </article>
+    
+  </main>
+  <script>
+    const input = document.getElementById("matchupSearch");
+    const characterFilter = document.getElementById("characterFilter");
+    const count = document.getElementById("matchupCount");
+    const clear = document.getElementById("clearSearch");
+    const cards = Array.from(document.querySelectorAll(".matchup-card"));
+
+    function normalize(value) {
+      return value.toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    function applySearch() {
+      const terms = normalize(input.value).split(" ").filter(Boolean);
+      const character = characterFilter.value;
+      let visible = 0;
+
+      for (const card of cards) {
+        const matchedKeyword = terms.every((term) => normalize(card.dataset.search || card.textContent).includes(term));
+        const matchedCharacter = !character || card.dataset.character === character;
+        const matched = matchedKeyword && matchedCharacter;
+        card.hidden = !matched;
+        if (matched) visible += 1;
+      }
+
+      count.textContent = `${visible} / ${cards.length}件`;
+    }
+
+    input.addEventListener("input", applySearch);
+    characterFilter.addEventListener("change", applySearch);
+    clear.addEventListener("click", () => {
+      input.value = "";
+      characterFilter.value = "";
+      input.focus();
+      applySearch();
+    });
+    applySearch();
+  </script>
+</body>
+</html>
