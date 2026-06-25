@@ -10,10 +10,13 @@
 ### Updated
 - 未作成のキャラ対にもTODOカードを追加し、全30キャラ分のSA情報を参照できるように整理
 - `matchup_viewer.html` と `index.html` の検索対象にSA名とフレーム値を追加
+- `super_arts` の技名を sf6-frame.app の `nameJa` に基づく日本語名へ置換
+- ヒット後フレームから `Knockdown` / `Hard Knockdown` の表示を削除
 
 ### Notes
 - UFD側で `**` や `--` の箇所は推測せず `TODO` として保持
 - 豪鬼の空中SA1、舞の空中SA2、ディージェイのSA2派生など、同じSAレベルの別行はそのまま複数行で保持
+- イングリッドのSA名は日本語ソース未確認のため英名のまま保持
 
 ## 2026-06-14 / news page and navigation cleanup
 
