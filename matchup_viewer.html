@@ -6,16 +6,23 @@
   <title>A.K.I. Knowledge Base - キャラ対</title>
   <style>
     :root {
-      --bg: #111820;
-      --panel: #18222d;
-      --soft: #202c38;
+      --bg: #0f1319;
+      --panel: #19212c;
+      --soft: #222b38;
       --ink: #eef4f8;
-      --muted: #9aa8b5;
-      --line: #31404f;
-      --accent: #59b7c8;
-      --danger: #dc5b5b;
-      --good: #4ec28b;
-      --warn: #e0a35b;
+      --muted: #a8b4c2;
+      --line: #3a4658;
+      --accent: #b56dff;
+      --accent-soft: #35234d;
+      --poison: #8bdc5c;
+      --venom: #d957b8;
+      --gold: #e7bf62;
+      --danger: #ef6b7a;
+      --good: #72d988;
+      --warn: #e4b65b;
+      --glow-purple: rgba(181, 109, 255, 0.22);
+      --glow-green: rgba(139, 220, 92, 0.16);
+      --glow-rose: rgba(217, 87, 184, 0.16);
     }
 
     * { box-sizing: border-box; }
@@ -23,9 +30,26 @@
     body {
       margin: 0;
       font-family: system-ui, "Meiryo", sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 16% 8%, var(--glow-purple), transparent 34%),
+        radial-gradient(circle at 82% 16%, var(--glow-green), transparent 30%),
+        radial-gradient(circle at 48% 100%, var(--glow-rose), transparent 36%),
+        linear-gradient(180deg, #10141b 0%, #121722 44%, #0d1218 100%);
+      background-attachment: fixed;
       color: var(--ink);
       line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        linear-gradient(120deg, transparent 0 28%, rgba(139, 220, 92, 0.055) 34%, transparent 45%),
+        linear-gradient(30deg, transparent 0 58%, rgba(181, 109, 255, 0.07) 64%, transparent 76%);
+      opacity: 0.9;
     }
 
     header {
@@ -33,9 +57,9 @@
       top: 0;
       z-index: 10;
       padding: 16px 20px;
-      background: rgba(17, 24, 32, 0.94);
+      background: rgba(15, 19, 25, 0.9);
       border-bottom: 1px solid var(--line);
-      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34);
+      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34), 0 0 30px rgba(181, 109, 255, 0.08);
       backdrop-filter: blur(10px);
     }
 
@@ -77,8 +101,8 @@
 
     .page-tabs a.active {
       border-color: var(--accent);
-      background: #173845;
-      color: #d7f7ff;
+      background: linear-gradient(135deg, rgba(181, 109, 255, 0.28), rgba(139, 220, 92, 0.16));
+      color: #f5edff;
     }
 
     .search-panel {
@@ -108,7 +132,7 @@
       min-height: 40px;
       border: 1px solid var(--line);
       border-radius: 7px;
-      background: #111820;
+      background: #10151d;
       color: var(--ink);
       font: inherit;
       font-size: 14px;
@@ -131,12 +155,20 @@
     }
 
     .matchup-card {
+      position: relative;
       margin-bottom: 16px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--panel);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26);
+      background: linear-gradient(180deg, rgba(31, 40, 53, 0.96), rgba(22, 29, 39, 0.98));
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.035);
       overflow: hidden;
+    }
+
+    .matchup-card::before {
+      content: "";
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--danger), var(--gold));
     }
 
     .matchup-card[hidden] {
@@ -148,11 +180,12 @@
       gap: 10px;
       padding: 16px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, #202c38 0%, #18222d 100%);
+      background: linear-gradient(135deg, rgba(34, 43, 56, 0.96), rgba(53, 35, 77, 0.72));
     }
 
     h2 {
       margin: 0;
+      color: #d9c1ff;
       font-size: 17px;
       line-height: 1.35;
     }
@@ -167,17 +200,37 @@
     .tags span {
       padding: 4px 8px;
       border-radius: 999px;
-      background: #173845;
-      color: #d7f7ff;
+      background: rgba(181, 109, 255, 0.18);
+      color: #f1e8ff;
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .tags span:nth-child(4n + 1) {
+      background: rgba(181, 109, 255, 0.22);
+      color: #f4e9ff;
+    }
+
+    .tags span:nth-child(4n + 2) {
+      background: rgba(139, 220, 92, 0.18);
+      color: #eaffdd;
+    }
+
+    .tags span:nth-child(4n + 3) {
+      background: rgba(217, 87, 184, 0.18);
+      color: #ffe5f7;
+    }
+
+    .tags span:nth-child(4n) {
+      background: rgba(231, 191, 98, 0.18);
+      color: #fff1c7;
     }
 
     .block {
       margin: 14px 16px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #141e28;
+      background: rgba(18, 25, 34, 0.88);
       overflow: hidden;
     }
 
@@ -185,7 +238,7 @@
       margin: 0;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      background: #202c38;
+      background: linear-gradient(90deg, rgba(34, 43, 56, 0.94), rgba(34, 43, 56, 0.55));
       font-size: 14px;
     }
 
@@ -247,7 +300,7 @@
     }
 
     thead th {
-      background: #17212c;
+      background: linear-gradient(180deg, #202a38, #17212c);
       color: var(--muted);
       font-size: 12px;
       white-space: nowrap;
@@ -257,6 +310,29 @@
       width: 54px;
       color: #f2e7ff;
       white-space: nowrap;
+    }
+
+    .sa-level {
+      border-left: 3px solid var(--accent);
+      font-weight: 900;
+    }
+
+    .sa-level.sa1 {
+      color: #f4e9ff;
+      background: rgba(181, 109, 255, 0.16);
+      border-left-color: var(--accent);
+    }
+
+    .sa-level.sa2 {
+      color: #eaffdd;
+      background: rgba(139, 220, 92, 0.14);
+      border-left-color: var(--poison);
+    }
+
+    .sa-level.sa3 {
+      color: #fff0c4;
+      background: rgba(231, 191, 98, 0.15);
+      border-left-color: var(--gold);
     }
 
     tbody tr:last-child th,
@@ -431,9 +507,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>真空波動拳</td><td>7F</td><td>+TODO</td><td>-24F</td></tr>
-<tr><th>SA2</th><td>真波掌撃</td><td>12F</td><td>+20F</td><td>-20F</td></tr>
-<tr><th>SA3</th><td>真・昇龍拳</td><td>5F</td><td>+14F (+14F)</td><td>-52F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>真空波動拳</td><td>7F</td><td>+TODO</td><td>-24F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>真波掌撃</td><td>12F</td><td>+20F</td><td>-20F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>真・昇龍拳</td><td>5F</td><td>+14F (+14F)</td><td>-52F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -498,9 +574,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>バルカンブラスト</td><td>6F</td><td>+17F</td><td>-29F</td></tr>
-<tr><th>SA2</th><td>イレイザー</td><td>5F</td><td>+2F</td><td>-29F</td></tr>
-<tr><th>SA3</th><td>ペイルライダー</td><td>10F</td><td>+18F (+18F)</td><td>-42F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>バルカンブラスト</td><td>6F</td><td>+17F</td><td>-29F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>イレイザー</td><td>5F</td><td>+2F</td><td>-29F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ペイルライダー</td><td>10F</td><td>+18F (+18F)</td><td>-42F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -555,9 +631,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>武麗禽</td><td>10F</td><td>+7F (-1F)</td><td>-60F (-93F)</td></tr>
-<tr><th>SA2</th><td>絶唱魔身</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>月牙叉炮</td><td>10F</td><td>+71F (+18F)</td><td>-27F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>武麗禽</td><td>10F</td><td>+7F (-1F)</td><td>-60F (-93F)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>絶唱魔身</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>月牙叉炮</td><td>10F</td><td>+71F (+18F)</td><td>-27F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -609,9 +685,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>気功掌</td><td>7F (7F)</td><td>+22F (TODO)</td><td>-22F (TODO)</td></tr>
-<tr><th>SA2</th><td>鳳翼扇</td><td>12F</td><td>+29. Juggle State on hit (requires Jump Cancel).</td><td>-35F</td></tr>
-<tr><th>SA3</th><td>蒼天乱華</td><td>8F</td><td>+6F (+18F)</td><td>-24F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>気功掌</td><td>7F (7F)</td><td>+22F (TODO)</td><td>-22F (TODO)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>鳳翼扇</td><td>12F</td><td>+29. Juggle State on hit (requires Jump Cancel).</td><td>-35F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>蒼天乱華</td><td>8F</td><td>+6F (+18F)</td><td>-24F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -663,9 +739,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>ソニックハリケーン</td><td>8F (7F)</td><td>+41F (+70F)</td><td>-26F (-2F)</td></tr>
-<tr><th>SA2</th><td>ソリッドパンチャー</td><td>6F</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>クロスファイアサマーソルト</td><td>9F</td><td>+16F (+16F)</td><td>-59F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>ソニックハリケーン</td><td>8F (7F)</td><td>+41F (+70F)</td><td>-26F (-2F)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>ソリッドパンチャー</td><td>6F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>クロスファイアサマーソルト</td><td>9F</td><td>+16F (+16F)</td><td>-59F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -717,9 +793,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>武神乱拍子</td><td>10F</td><td>+22F (+38F)</td><td>-25F</td></tr>
-<tr><th>SA2</th><td>武神天翔亢竜</td><td>13F</td><td>+22F</td><td>-25F</td></tr>
-<tr><th>SA3</th><td>武神顕現神楽</td><td>8F</td><td>+16F (+16F)</td><td>-35F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>武神乱拍子</td><td>10F</td><td>+22F (+38F)</td><td>-25F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>武神天翔亢竜</td><td>13F</td><td>+22F</td><td>-25F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>武神顕現神楽</td><td>8F</td><td>+16F (+16F)</td><td>-35F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -771,9 +847,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>殺界風破斬</td><td>7F</td><td>+TODO (+TODO)</td><td>-32F (-31F)</td></tr>
-<tr><th>SA2</th><td>風水エンジン</td><td>7F (9F)</td><td>TODO (+4F)</td><td>TODO (-17F)</td></tr>
-<tr><th>SA3</th><td>回旋断界落</td><td>10F</td><td>+22F (+20F)</td><td>-31F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>殺界風破斬</td><td>7F</td><td>+TODO (+TODO)</td><td>-32F (-31F)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>風水エンジン</td><td>7F (9F)</td><td>TODO (+4F)</td><td>TODO (-17F)</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>回旋断界落</td><td>10F</td><td>+22F (+20F)</td><td>-31F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -827,9 +903,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>龍尾烈脚</td><td>7F</td><td>+9F</td><td>-24F</td></tr>
-<tr><th>SA2</th><td>疾風迅雷脚</td><td>6F</td><td>+36F</td><td>-5F</td></tr>
-<tr><th>SA3</th><td>神龍烈破</td><td>7F</td><td>+15F (+21F)</td><td>-40F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>龍尾烈脚</td><td>7F</td><td>+9F</td><td>-24F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>疾風迅雷脚</td><td>6F</td><td>+36F</td><td>-5F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>神龍烈破</td><td>7F</td><td>+15F (+21F)</td><td>-40F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -882,9 +958,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>シャウトオブアース</td><td>8F</td><td>+15F</td><td>-29F</td></tr>
-<tr><th>SA2</th><td>ライトニングビースト</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>グランドシェイブキャノンボール</td><td>10F</td><td>+50F (+14F)</td><td>-46F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>シャウトオブアース</td><td>8F</td><td>+15F</td><td>-29F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>ライトニングビースト</td><td>1F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>グランドシェイブキャノンボール</td><td>10F</td><td>+50F (+14F)</td><td>-46F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -936,9 +1012,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>ヨガインフェルノ</td><td>10F</td><td>(+24F) (+24F) (+27F)</td><td>(-15F) (-15F) (-22F)</td></tr>
-<tr><th>SA2</th><td>ヨガサンバースト</td><td>7F (7F+???)</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>ヨガマーシレス</td><td>10F</td><td>+19F (+19F)</td><td>-62F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>ヨガインフェルノ</td><td>10F</td><td>(+24F) (+24F) (+27F)</td><td>(-15F) (-15F) (-22F)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>ヨガサンバースト</td><td>7F (7F+???)</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ヨガマーシレス</td><td>10F</td><td>+19F (+19F)</td><td>-62F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -990,9 +1066,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>発揮爆砕</td><td>7F</td><td>+13...</td><td>-33F</td></tr>
-<tr><th>SA2</th><td>スーパー鬼無双</td><td>12F</td><td>+13F</td><td>-27F</td></tr>
-<tr><th>SA3</th><td>千秋楽</td><td>9F</td><td>+11F (+34F)</td><td>-34F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>発揮爆砕</td><td>7F</td><td>+13...</td><td>-33F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>スーパー鬼無双</td><td>12F</td><td>+13F</td><td>-27F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>千秋楽</td><td>9F</td><td>+11F (+34F)</td><td>-34F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1044,11 +1120,11 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>グレイテストソバット</td><td>7F</td><td>+32F</td><td>-12F</td></tr>
-<tr><th>SA2</th><td>サンライズフェスティバル・ライト</td><td>12F</td><td>+6F (...+29F)</td><td>-29F</td></tr>
-<tr><th>SA2</th><td>サンライズフェスティバル・マーベラス</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
-<tr><th>SA2</th><td>サンライズフェスティバル・マキシマム</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
-<tr><th>SA3</th><td>サタデーナイト</td><td>9F</td><td>+26F (+22F)</td><td>-28F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>グレイテストソバット</td><td>7F</td><td>+32F</td><td>-12F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サンライズフェスティバル・ライト</td><td>12F</td><td>+6F (...+29F)</td><td>-29F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サンライズフェスティバル・マーベラス</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サンライズフェスティバル・マキシマム</td><td>12F</td><td>+6F (TODO)</td><td>-29F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>サタデーナイト</td><td>9F</td><td>+26F (+22F)</td><td>-28F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1103,9 +1179,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>アラベスク</td><td>10F</td><td>+7...</td><td>-49F</td></tr>
-<tr><th>SA2</th><td>エトワール</td><td>7F</td><td>+32F</td><td>-61F</td></tr>
-<tr><th>SA3</th><td>パ・ド・ドゥ</td><td>7F (6F+1F)</td><td>+16F</td><td>-65F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>アラベスク</td><td>10F</td><td>+7...</td><td>-49F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>エトワール</td><td>7F</td><td>+32F</td><td>-61F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>パ・ド・ドゥ</td><td>7F (6F+1F)</td><td>+16F</td><td>-65F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1169,9 +1245,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>マリーザジャベリン</td><td>19F (42F) (6F)</td><td>+14F (+35F) (+46F)</td><td>-43F (-43F) (TODO)</td></tr>
-<tr><th>SA2</th><td>メテオリティス</td><td>9F (34F)</td><td>+17F</td><td>TODO (-44F)</td></tr>
-<tr><th>SA3</th><td>アポロウーサ</td><td>13F</td><td>+14F (+14F)</td><td>-39F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>マリーザジャベリン</td><td>19F (42F) (6F)</td><td>+14F (+35F) (+46F)</td><td>-43F (-43F) (TODO)</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>メテオリティス</td><td>9F (34F)</td><td>+17F</td><td>TODO (-44F)</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>アポロウーサ</td><td>13F</td><td>+14F (+14F)</td><td>-39F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1224,9 +1300,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>チェルノボーグ</td><td>7F, 15F</td><td>+22...+32F</td><td>-33...-23F</td></tr>
-<tr><th>SA2</th><td>ラヴーシュカ</td><td>13F</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>ザプリェット</td><td>18F</td><td>+23F (+23F)</td><td>-50F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>チェルノボーグ</td><td>7F, 15F</td><td>+22...+32F</td><td>-33...-23F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>ラヴーシュカ</td><td>13F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ザプリェット</td><td>18F</td><td>+23F (+23F)</td><td>-50F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1278,9 +1354,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>エリアルロシアンスラム</td><td>11F</td><td>+29F</td><td>TODO</td></tr>
-<tr><th>SA2</th><td>サイクロンラリアット</td><td>18F</td><td>+5F / +87F / TODO / TODO</td><td>-35F</td></tr>
-<tr><th>SA3</th><td>ボリショイストームバスター</td><td>6F (6F+0F)</td><td>+26F</td><td>TODO</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>エリアルロシアンスラム</td><td>11F</td><td>+29F</td><td>TODO</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サイクロンラリアット</td><td>18F</td><td>+5F / +87F / TODO / TODO</td><td>-35F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ボリショイストームバスター</td><td>6F (6F+0F)</td><td>+26F</td><td>TODO</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1341,9 +1417,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>ブリージングホーク</td><td>10F</td><td>+27F</td><td>-36F</td></tr>
-<tr><th>SA2</th><td>サンダーバード</td><td>9F (9F)</td><td>+42F (+43F)</td><td>-60F (-59F)</td></tr>
-<tr><th>SA3</th><td>レイジングタイフーン</td><td>7F (5F+2F)</td><td>+4F</td><td>TODO</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>ブリージングホーク</td><td>10F</td><td>+27F</td><td>-36F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サンダーバード</td><td>9F (9F)</td><td>+42F (+43F)</td><td>-60F (-59F)</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>レイジングタイフーン</td><td>7F (5F+2F)</td><td>+4F</td><td>TODO</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1399,9 +1475,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>スピンドライブスマッシャー</td><td>9F</td><td>+10F</td><td>-24F</td></tr>
-<tr><th>SA2</th><td>キラービースピン</td><td>13F</td><td>+12F</td><td>-24...</td></tr>
-<tr><th>SA3</th><td>デルタレッドアサルト</td><td>9F</td><td>+17F (+22F)</td><td>-33F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>スピンドライブスマッシャー</td><td>9F</td><td>+10F</td><td>-24F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>キラービースピン</td><td>13F</td><td>+12F</td><td>-24...</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>デルタレッドアサルト</td><td>9F</td><td>+17F (+22F)</td><td>-33F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1461,9 +1537,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>スーパー・ラシード・キック</td><td>9F</td><td>+1F (+7...+18F)</td><td>-53F</td></tr>
-<tr><th>SA2</th><td>イウサール</td><td>11F</td><td>+104...</td><td>+33...</td></tr>
-<tr><th>SA3</th><td>アルタイル</td><td>11F</td><td>+17F (+18F)</td><td>-75F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>スーパー・ラシード・キック</td><td>9F</td><td>+1F (+7...+18F)</td><td>-53F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>イウサール</td><td>11F</td><td>+104...</td><td>+33...</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>アルタイル</td><td>11F</td><td>+17F (+18F)</td><td>-75F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1526,9 +1602,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>死屍累々</td><td>10F</td><td>+30F</td><td>-46F</td></tr>
-<tr><th>SA2</th><td>紫煙裂爪</td><td>7F</td><td>+30F</td><td>-19F</td></tr>
-<tr><th>SA3</th><td>睚眦</td><td>10F</td><td>+30F (+21F)</td><td>-36F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>死屍累々</td><td>10F</td><td>+30F</td><td>-46F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>紫煙裂爪</td><td>7F</td><td>+30F</td><td>-19F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>睚眦</td><td>10F</td><td>+30F (+21F)</td><td>-36F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1582,9 +1658,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>サイコストーム</td><td>13F</td><td>+33F</td><td>-32F</td></tr>
-<tr><th>SA2</th><td>サイコキャノン</td><td>8F</td><td>Free Juggle State TODO</td><td>+65...</td></tr>
-<tr><th>SA3</th><td>サイコチェンバー</td><td>10F</td><td>+24F (+24F)</td><td>-49F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>サイコストーム</td><td>13F</td><td>+33F</td><td>-32F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サイコキャノン</td><td>8F</td><td>Free Juggle State TODO</td><td>+65...</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>サイコチェンバー</td><td>10F</td><td>+24F (+24F)</td><td>-49F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1636,10 +1712,10 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>滅殺豪波動</td><td>10F</td><td>+9...</td><td>-41F</td></tr>
-<tr><th>SA1</th><td>天魔豪斬空</td><td>14F</td><td>+51...</td><td>-26...+6F</td></tr>
-<tr><th>SA2</th><td>崩天劫火</td><td>9F</td><td>+29...+97F</td><td>-35F</td></tr>
-<tr><th>SA3</th><td>禍坏</td><td>8F</td><td>+18F (+18F)</td><td>-41F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>滅殺豪波動</td><td>10F</td><td>+9...</td><td>-41F</td></tr>
+<tr><th class="sa-level sa1">SA1</th><td>天魔豪斬空</td><td>14F</td><td>+51...</td><td>-26...+6F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>崩天劫火</td><td>9F</td><td>+29...+97F</td><td>-35F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>禍坏</td><td>8F</td><td>+18F (+18F)</td><td>-41F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1691,9 +1767,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>ニープレスナイトメア</td><td>10F</td><td>+11F</td><td>-41F</td></tr>
-<tr><th>SA2</th><td>サイコパニッシャー</td><td>24F</td><td>+23F</td><td>-34F</td></tr>
-<tr><th>SA3</th><td>アンリミテッドサイコクラッシャー</td><td>10F</td><td>+15F</td><td>-46F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>ニープレスナイトメア</td><td>10F</td><td>+11F</td><td>-41F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サイコパニッシャー</td><td>24F</td><td>+23F</td><td>-34F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>アンリミテッドサイコクラッシャー</td><td>10F</td><td>+15F</td><td>-46F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1745,9 +1821,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>バスターウルフ</td><td>7F</td><td>+22F</td><td>-26F</td></tr>
-<tr><th>SA2</th><td>パワーゲイザー</td><td>13F</td><td>+24F</td><td>-27F</td></tr>
-<tr><th>SA3</th><td>ライジングファング</td><td>8F</td><td>+22F (+37F)</td><td>-50F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>バスターウルフ</td><td>7F</td><td>+22F</td><td>-26F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>パワーゲイザー</td><td>13F</td><td>+24F</td><td>-27F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ライジングファング</td><td>8F</td><td>+22F (+37F)</td><td>-50F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1799,10 +1875,10 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>陽炎の舞</td><td>6F</td><td>+26F (+40F)</td><td>-26F</td></tr>
-<tr><th>SA2</th><td>超必殺忍蜂</td><td>7F</td><td>+23F (+38F)</td><td>-24F</td></tr>
-<tr><th>SA2</th><td>空中超必殺忍蜂</td><td>3F</td><td>+11F (+10F)</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>不知火流・炎舞仇桜</td><td>10F</td><td>+19F (+20F)</td><td>-33F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>陽炎の舞</td><td>6F</td><td>+26F (+40F)</td><td>-26F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>超必殺忍蜂</td><td>7F</td><td>+23F (+38F)</td><td>-24F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>空中超必殺忍蜂</td><td>3F</td><td>+11F (+10F)</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>不知火流・炎舞仇桜</td><td>10F</td><td>+19F (+20F)</td><td>-33F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1854,9 +1930,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>ミーティアボレー</td><td>9F</td><td>Limited Juggle +42F</td><td>-68F</td></tr>
-<tr><th>SA2</th><td>リヴァイブダンス</td><td>12F</td><td>+25F [+1F]</td><td>-47F</td></tr>
-<tr><th>SA3</th><td>グラスランドソング</td><td>8F</td><td>+24F (+29F)</td><td>-54F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>ミーティアボレー</td><td>9F</td><td>Limited Juggle +42F</td><td>-68F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>リヴァイブダンス</td><td>12F</td><td>+25F [+1F]</td><td>-47F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>グラスランドソング</td><td>8F</td><td>+24F (+29F)</td><td>-54F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1908,9 +1984,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>タイガーキャノン</td><td>7F</td><td>+22...+34F</td><td>-31...-19F</td></tr>
-<tr><th>SA2</th><td>サベージタイガー</td><td>10F</td><td>+4F / Juggle +53F / +7F / +19F</td><td>-58F</td></tr>
-<tr><th>SA3</th><td>タイガーヴァンキッシュ</td><td>12F</td><td>+15F</td><td>-51F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>タイガーキャノン</td><td>7F</td><td>+22...+34F</td><td>-31...-19F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>サベージタイガー</td><td>10F</td><td>+4F / Juggle +53F / +7F / +19F</td><td>-58F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>タイガーヴァンキッシュ</td><td>12F</td><td>+15F</td><td>-51F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1962,9 +2038,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>バウンサーステップ</td><td>8F</td><td>+7...</td><td>-21F</td></tr>
-<tr><th>SA2</th><td>ミッションオーバー</td><td>7F</td><td>+19F</td><td>-29F</td></tr>
-<tr><th>SA3</th><td>アンラックリジェクター</td><td>10F</td><td>+23F</td><td>-38F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>バウンサーステップ</td><td>8F</td><td>+7...</td><td>-21F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>ミッションオーバー</td><td>7F</td><td>+19F</td><td>-29F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>アンラックリジェクター</td><td>10F</td><td>+23F</td><td>-38F</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -2016,8 +2092,8 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>レイジングスピアー</td><td>9F</td><td>+30...</td><td>-38F</td></tr>
-<tr><th>SA3</th><td>ファイナルキャプチュード</td><td>12F</td><td>+18F (+25F)</td><td>TODO</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>レイジングスピアー</td><td>9F</td><td>+30...</td><td>-38F</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>ファイナルキャプチュード</td><td>12F</td><td>+18F (+25F)</td><td>TODO</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -2069,9 +2145,9 @@
                 <th>ガード後</th>
               </tr>
             </thead>
-            <tbody><tr><th>SA1</th><td>Shining Sun</td><td>11F</td><td>+12F | +17F | +20F</td><td>-99F</td></tr>
-<tr><th>SA2</th><td>Order of the Sun</td><td>11F</td><td>TODO</td><td>TODO</td></tr>
-<tr><th>SA3</th><td>Cosmic Ray</td><td>20F</td><td>+30F (+30F)</td><td>-45F</td></tr></tbody>
+            <tbody><tr><th class="sa-level sa1">SA1</th><td>Shining Sun</td><td>11F</td><td>+12F | +17F | +20F</td><td>-99F</td></tr>
+<tr><th class="sa-level sa2">SA2</th><td>Order of the Sun</td><td>11F</td><td>TODO</td><td>TODO</td></tr>
+<tr><th class="sa-level sa3">SA3</th><td>Cosmic Ray</td><td>20F</td><td>+30F (+30F)</td><td>-45F</td></tr></tbody>
           </table>
         </div>
       </section>

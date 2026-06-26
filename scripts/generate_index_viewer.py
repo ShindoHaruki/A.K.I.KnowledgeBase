@@ -36,9 +36,11 @@ def super_art_rows(items):
         return '<tr><td class="todo" colspan="5">TODO</td></tr>'
     rows = []
     for item in items:
+        level = item.get('level', 'TODO')
+        level_class = str(level).lower()
         rows.append(
             "<tr>"
-            f"<th>{h(item.get('level', 'TODO'))}</th>"
+            f'<th class="sa-level {h(level_class)}">{h(level)}</th>'
             f"<td>{h(item.get('name', 'TODO'))}</td>"
             f"<td>{h(item.get('startup', 'TODO'))}</td>"
             f"<td>{h(item.get('on_hit', 'TODO'))}</td>"
@@ -475,18 +477,24 @@ def main():
   <title>A.K.I. Knowledge Base</title>
   <style>
     :root {{
-      --bg: #111820;
-      --panel: #18222d;
-      --soft: #202c38;
+      --bg: #0f1319;
+      --panel: #19212c;
+      --soft: #222b38;
       --ink: #eef4f8;
-      --muted: #9aa8b5;
-      --line: #31404f;
-      --accent: #59b7c8;
-      --accent-soft: #173845;
-      --danger: #dc5b5b;
-      --good: #4ec28b;
-      --warn: #e0a35b;
-      --merit: #6ea8fe;
+      --muted: #a8b4c2;
+      --line: #3a4658;
+      --accent: #b56dff;
+      --accent-soft: #35234d;
+      --poison: #8bdc5c;
+      --venom: #d957b8;
+      --gold: #e7bf62;
+      --danger: #ef6b7a;
+      --good: #72d988;
+      --warn: #e4b65b;
+      --merit: #77a8ff;
+      --glow-purple: rgba(181, 109, 255, 0.22);
+      --glow-green: rgba(139, 220, 92, 0.16);
+      --glow-rose: rgba(217, 87, 184, 0.16);
     }}
 
     * {{ box-sizing: border-box; }}
@@ -494,9 +502,26 @@ def main():
     body {{
       margin: 0;
       font-family: system-ui, "Meiryo", sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 16% 8%, var(--glow-purple), transparent 34%),
+        radial-gradient(circle at 82% 16%, var(--glow-green), transparent 30%),
+        radial-gradient(circle at 48% 100%, var(--glow-rose), transparent 36%),
+        linear-gradient(180deg, #10141b 0%, #121722 44%, #0d1218 100%);
+      background-attachment: fixed;
       color: var(--ink);
       line-height: 1.5;
+    }}
+
+    body::before {{
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        linear-gradient(120deg, transparent 0 28%, rgba(139, 220, 92, 0.055) 34%, transparent 45%),
+        linear-gradient(30deg, transparent 0 58%, rgba(181, 109, 255, 0.07) 64%, transparent 76%);
+      opacity: 0.9;
     }}
 
     header {{
@@ -504,9 +529,9 @@ def main():
       top: 0;
       z-index: 10;
       padding: 16px 20px;
-      background: rgba(17, 24, 32, 0.94);
+      background: rgba(15, 19, 25, 0.9);
       border-bottom: 1px solid var(--line);
-      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34);
+      box-shadow: 0 2px 22px rgba(0, 0, 0, 0.34), 0 0 30px rgba(181, 109, 255, 0.08);
       backdrop-filter: blur(10px);
     }}
 
@@ -563,8 +588,8 @@ def main():
     .page-tabs button.active,
     .pager button.active {{
       border-color: var(--accent);
-      background: var(--accent-soft);
-      color: #d7f7ff;
+      background: linear-gradient(135deg, rgba(181, 109, 255, 0.28), rgba(139, 220, 92, 0.16));
+      color: #f5edff;
     }}
 
     main {{
@@ -611,7 +636,7 @@ def main():
       padding: 0 12px;
       border: 1px solid var(--line);
       border-radius: 7px;
-      background: #111820;
+      background: #10151d;
       color: var(--ink);
       font: inherit;
       font-size: 14px;
@@ -640,11 +665,31 @@ def main():
     .empty-state,
     .technique-card,
     .reference-card {{
+      position: relative;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--panel);
+      background: linear-gradient(180deg, rgba(31, 40, 53, 0.96), rgba(22, 29, 39, 0.98));
       overflow: hidden;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    }}
+
+    .news-item::before,
+    .route-card::before,
+    .matchup-card::before,
+    .empty-state::before,
+    .technique-card::before,
+    .reference-card::before {{
+      content: "";
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--poison), var(--gold), var(--venom));
+    }}
+
+    .news-item::before {{ background: linear-gradient(90deg, var(--gold), var(--venom)); }}
+    .technique-card::before {{ background: linear-gradient(90deg, var(--poison), var(--accent)); }}
+    .reference-card::before {{ background: linear-gradient(90deg, #58c7ff, var(--gold)); }}
+    .route-card::before {{ background: linear-gradient(90deg, var(--venom), var(--poison)); }}
+    .matchup-card::before {{ background: linear-gradient(90deg, var(--accent), var(--danger), var(--gold)); }}
     }}
 
     .news-meta {{
@@ -654,7 +699,7 @@ def main():
       align-items: center;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      background: var(--soft);
+      background: linear-gradient(90deg, rgba(231, 191, 98, 0.12), rgba(217, 87, 184, 0.08));
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
@@ -665,10 +710,34 @@ def main():
     .character-tags span {{
       padding: 3px 7px;
       border-radius: 999px;
-      background: var(--accent-soft);
-      color: #d7f7ff;
+      background: rgba(181, 109, 255, 0.18);
+      color: #f1e8ff;
       font-size: 12px;
       font-weight: 800;
+    }}
+
+    .tags span:nth-child(4n + 1),
+    .character-tags span:nth-child(4n + 1) {{
+      background: rgba(181, 109, 255, 0.22);
+      color: #f4e9ff;
+    }}
+
+    .tags span:nth-child(4n + 2),
+    .character-tags span:nth-child(4n + 2) {{
+      background: rgba(139, 220, 92, 0.18);
+      color: #eaffdd;
+    }}
+
+    .tags span:nth-child(4n + 3),
+    .character-tags span:nth-child(4n + 3) {{
+      background: rgba(217, 87, 184, 0.18);
+      color: #ffe5f7;
+    }}
+
+    .tags span:nth-child(4n),
+    .character-tags span:nth-child(4n) {{
+      background: rgba(231, 191, 98, 0.18);
+      color: #fff1c7;
     }}
 
     .news-item h2,
@@ -698,7 +767,7 @@ def main():
       gap: 8px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--line);
-      background: var(--soft);
+      background: linear-gradient(135deg, rgba(34, 43, 56, 0.96), rgba(53, 35, 77, 0.72));
     }}
 
     .tags,
@@ -711,14 +780,14 @@ def main():
 
     .character-tags {{
       padding: 12px 14px;
-      background: #151f29;
+      background: rgba(16, 21, 29, 0.72);
     }}
 
     .block {{
       margin: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #141e28;
+      background: rgba(18, 25, 34, 0.88);
       overflow: hidden;
     }}
 
@@ -726,9 +795,20 @@ def main():
       margin: 0;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      background: var(--soft);
+      background: linear-gradient(90deg, rgba(34, 43, 56, 0.94), rgba(34, 43, 56, 0.55));
       font-size: 14px;
     }}
+
+    .view[data-view="news"] .summary,
+    .news-item h2 {{ color: var(--gold); }}
+    .view[data-view="techniques"] .summary,
+    .technique-card .card-head h2 {{ color: var(--poison); }}
+    .view[data-view="references"] .summary,
+    .reference-card .card-head h2 {{ color: #7ed9ff; }}
+    .view[data-view="routes"] .summary,
+    .route-card .card-head h2 {{ color: var(--venom); }}
+    .view[data-view="matchups"] .summary,
+    .matchup-card .card-head h2 {{ color: #d9c1ff; }}
 
     .overview h3 {{ color: var(--accent); }}
     .danger h3 {{ color: var(--danger); }}
@@ -781,7 +861,7 @@ def main():
     }}
 
     thead th {{
-      background: #17212c;
+      background: linear-gradient(180deg, #202a38, #17212c);
       color: var(--muted);
       font-size: 12px;
       white-space: nowrap;
@@ -791,6 +871,29 @@ def main():
       width: 54px;
       color: #f2e7ff;
       white-space: nowrap;
+    }}
+
+    .sa-level {{
+      border-left: 3px solid var(--accent);
+      font-weight: 900;
+    }}
+
+    .sa-level.sa1 {{
+      color: #f4e9ff;
+      background: rgba(181, 109, 255, 0.16);
+      border-left-color: var(--accent);
+    }}
+
+    .sa-level.sa2 {{
+      color: #eaffdd;
+      background: rgba(139, 220, 92, 0.14);
+      border-left-color: var(--poison);
+    }}
+
+    .sa-level.sa3 {{
+      color: #fff0c4;
+      background: rgba(231, 191, 98, 0.15);
+      border-left-color: var(--gold);
     }}
 
     tbody tr:last-child th,
