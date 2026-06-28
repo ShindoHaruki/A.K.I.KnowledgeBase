@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-28 / Chun-Li matchup notes
+
+### Updated
+- `data/aki_matchups.yml` の春麗戦に方針、有効な選択肢、確定反撃、注意する行動を追加
+- 立ち中Kを軸にした地上戦、気功拳連携へのインパクト、覇山蹴への対応を整理
+- `data/news.yml` に春麗戦追加のお知らせを掲載
+
+### Notes
+- 未記入の備考は推測せず `TODO` のまま保持
+
 ## 2026-06-28 / Jamie matchup notes
 
 ### Updated
