@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-28 / Jamie matchup notes
+
+### Updated
+- `data/aki_matchups.yml` のジェイミー戦に方針、有効な選択肢、確定反撃、注意する行動を追加
+- 酒レベル別の注意点、ラッシュ強P後の守り方、酒飲みへの追撃、OD無影蹴連携への対処を整理
+- `data/news.yml` にジェイミー戦追加のお知らせを掲載
+
+### Notes
+- 未記入の備考は推測せず `TODO` のまま保持
+
 ## 2026-06-26 / visual theme refresh
 
 ### Updated

@@ -225,7 +225,7 @@ def news_item(item):
         <h2>{h(item.get("title", "お知らせ"))}</h2>
         <p>{h(item.get("body", ""))}</p>
       </article>
-    """
+    """.strip()
 
 
 def matchup_card(character, matchup):
